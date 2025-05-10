@@ -1,6 +1,7 @@
 // File: src/utils/statsCalculator.ts
 
-import { RepoData, Stats } from '../types';
+import type { Stats } from '../types/stats';
+import type { RepoData } from '../components/Uploader';
 
 export default function calculateStats(data: RepoData[]): Stats {
   const totalRepos = data.length;
@@ -51,12 +52,12 @@ export default function calculateStats(data: RepoData[]): Stats {
 
   const now = new Date();
   const updateFrequency: Record<string, number> = {
-    'Updated in last week': 0,
-    'Updated in last month': 0,
-    'Updated in last quarter': 0,
-    'Updated in last year': 0,
-    'Not updated in 1-2 years': 0,
-    'Not updated in over 2 years': 0,
+    'Past week': 0,
+    'Past month': 0,
+    'Past 3 months': 0,
+    'Past year': 0,
+    '1-2 years ago': 0,
+    '2+ years ago': 0,
   };
 
   data.forEach((repo) => {
@@ -64,12 +65,12 @@ export default function calculateStats(data: RepoData[]): Stats {
     const lastPush = new Date(repo.Last_Push);
     const daysSinceUpdate = (now.getTime() - lastPush.getTime()) / (1000 * 60 * 60 * 24);
 
-    if (daysSinceUpdate < 7) updateFrequency['Updated in last week']++;
-    else if (daysSinceUpdate < 30) updateFrequency['Updated in last month']++;
-    else if (daysSinceUpdate < 90) updateFrequency['Updated in last quarter']++;
-    else if (daysSinceUpdate < 365) updateFrequency['Updated in last year']++;
-    else if (daysSinceUpdate < 730) updateFrequency['Not updated in 1-2 years']++;
-    else updateFrequency['Not updated in over 2 years']++;
+    if (daysSinceUpdate < 7) updateFrequency['Past week']++;
+    else if (daysSinceUpdate < 30) updateFrequency['Past month']++;
+    else if (daysSinceUpdate < 90) updateFrequency['Past 3 months']++;
+    else if (daysSinceUpdate < 365) updateFrequency['Past year']++;
+    else if (daysSinceUpdate < 730) updateFrequency['1-2 years ago']++;
+    else updateFrequency['2+ years ago']++;
   });
 
   const updateData = Object.entries(updateFrequency).map(([name, value]) => ({ name, value }));
@@ -111,7 +112,7 @@ export default function calculateStats(data: RepoData[]): Stats {
     .slice(0, 10)
     .map(repo => ({
       name: `${repo.Org_Name || ''}/${repo.Repo_Name || ''}`,
-      size: repo.Repo_Size_MB || 0,
+      value: repo.Repo_Size_MB || 0,
     }));
 
   const mostActiveRepos = [...data]
@@ -222,7 +223,7 @@ export default function calculateStats(data: RepoData[]): Stats {
       };
     })
     .sort((a, b) => b.ageInDays - a.ageInDays)
-    .slice(0, 15);
+    .slice(0, 10);
 
   return {
     basic: {

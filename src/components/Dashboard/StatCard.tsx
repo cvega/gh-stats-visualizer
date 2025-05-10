@@ -28,7 +28,7 @@ const cardStyle: React.CSSProperties = {
 };
 
 const labelStyle: React.CSSProperties = {
-  fontSize: '12px',
+  fontSize: '16px',
   color: '#8b949e',
   marginBottom: '4px'
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Stats } from '../types';
+import type { Stats } from '../types/stats';
 
 import StatCard from './Dashboard/StatCard';
 import SectionHeader from './Dashboard/SectionHeader';
@@ -59,17 +59,30 @@ export default function Dashboard({ stats }: DashboardProps) {
       </div>
 
       {/* Full-Width Charts */}
-      <MetadataRatio data={stats.metadataRatios} />
-      <BranchComplexity data={stats.branchComplexity} />
-      <TagRelease data={stats.tagReleaseFrequency} />
-      <RepoAge data={stats.repositoryAge} />
-      <LargestRepos data={stats.largestRepos} />
-      <MostActive data={stats.mostActiveRepos} />
+      <div style={{ marginBottom: '24px' }}>
+        <MetadataRatio data={stats.metadataRatios} />
+      </div>
+      <div style={{ marginBottom: '24px' }}>
+        <BranchComplexity data={stats.branchComplexity} />
+      </div>
+      <div style={{ marginBottom: '24px' }}>
+        <TagRelease data={stats.tagReleaseFrequency} />
+      </div>
+      <div style={{ marginBottom: '24px' }}>
+        <RepoAge data={stats.repositoryAge} />
+      </div>
+      <div style={{ marginBottom: '24px' }}>
+        <LargestRepos data={stats.largestRepos} />
+      </div>
+      <div style={{ marginBottom: '24px' }}>
+        <MostActive data={stats.mostActiveRepos} />
+      </div>
       <Tables
         newest={stats.newestRepos}
         oldest={stats.oldestRepos}
         updated={stats.recentlyUpdated}
       />
+      
 
       <Footer />
     </div>

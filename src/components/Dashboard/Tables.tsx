@@ -1,6 +1,7 @@
 // File: src/components/Dashboard/Tables.tsx
 
 import React from 'react';
+import { chartCardStyle, titleStyle } from './styles';
 
 interface RepoDate {
   name: string;
@@ -37,18 +38,10 @@ function RepoTable({
 }) {
   return (
     <div style={{
-    backgroundColor: '#161b22',
-    padding: '24px',
-    borderRadius: '6px',
-    border: '1px solid #30363d',
-    ...(fullWidth
-      ? {
-          gridColumn: '1 / -1',
-          marginTop: '0',        // prevent stacking margin collapse
-        }
-      : {}),
-  }}>
-      <h3 style={{ color: 'white', fontSize: '18px', marginBottom: '16px' }}>{title}</h3>
+      ...chartCardStyle,
+      ...(fullWidth ? { gridColumn: '1 / -1', marginTop: '32px' } : {})
+    }}>
+      <h3 style={titleStyle}>{title}</h3>
       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>
           <tr style={{ borderBottom: '1px solid #30363d' }}>
@@ -80,7 +73,8 @@ const gridStyle: React.CSSProperties = {
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
   gap: '24px',
-  marginBottom: '24px'
+  marginBottom: '24px',
+  marginTop: '24px'
 };
 
 const thStyle: React.CSSProperties = {

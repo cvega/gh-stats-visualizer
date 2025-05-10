@@ -4,6 +4,7 @@ import React from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
+import { chartCardStyle, chartContainerStyle, titleStyle, tooltipStyle, tooltipItemStyle } from './styles';
 
 interface Props {
   data: {
@@ -21,55 +22,53 @@ export default function TagRelease({ data }: Props) {
   return (
     <div style={chartCardStyle}>
       <h3 style={titleStyle}>Tag & Release Frequency</h3>
-      <p style={subtitleStyle}>
-        Repositories with highest tag and release creation rate per year
-      </p>
-      <ResponsiveContainer width="100%" height={400}>
-        <BarChart
-          data={data}
-          layout="vertical"
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" stroke="#30363d" />
-          <XAxis type="number" stroke="#8b949e" />
-          <YAxis type="category" dataKey="name" width={150} stroke="#8b949e" />
-          <Tooltip
-            contentStyle={{
-              backgroundColor: '#0d1117',
-              borderColor: '#30363d',
-              color: '#c9d1d9',
-              borderRadius: '6px',
-              fontSize: '14px'
-            }}
-            formatter={(value: number) => value.toFixed(2)}
-            itemStyle={{ color: '#c9d1d9' }}
-          />
-          <Legend />
-          <Bar dataKey="tagsPerYear" stackId="a" fill="#3fb950" name="Tags per Year" />
-          <Bar dataKey="releasesPerYear" stackId="a" fill="#58a6ff" name="Releases per Year" />
-        </BarChart>
-      </ResponsiveContainer>
+      <div style={chartContainerStyle}>
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart
+            data={data}
+            layout="vertical"
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" stroke="#30363d" />
+            <XAxis type="number" stroke="#8b949e" tick={{ fontSize: 12 }} />
+            <YAxis
+              type="category"
+              dataKey="name"
+              width={90}
+              stroke="#8b949e"
+              tick={({ x, y, payload }) => {
+                let repo = payload.value;
+                if (repo.includes('/')) {
+                  repo = repo.split('/').pop();
+                }
+                const label = repo.length > 18 ? repo.slice(0, 18) + '…' : repo;
+                return (
+                  <text
+                    x={x}
+                    y={y}
+                    dy={4}
+                    fontSize={12}
+                    textAnchor="end"
+                    transform={`rotate(-30, ${x}, ${y})`}
+                    fill="#8b949e"
+                  >
+                    {label}
+                  </text>
+                );
+              }}
+            />
+            <Tooltip
+              contentStyle={tooltipStyle}
+              formatter={(value: number) => value.toFixed(2)}
+              itemStyle={tooltipItemStyle}
+            />
+            <Legend />
+            <Bar dataKey="tagsPerYear" stackId="a" fill="#3fb950" name="Tags per Year" />
+            <Bar dataKey="releasesPerYear" stackId="a" fill="#58a6ff" name="Releases per Year" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 }
-
-const chartCardStyle: React.CSSProperties = {
-  backgroundColor: '#161b22',
-  padding: '24px',
-  borderRadius: '6px',
-  border: '1px solid #30363d',
-  marginBottom: '32px'
-};
-
-const titleStyle: React.CSSProperties = {
-  color: 'white',
-  fontSize: '18px',
-  marginBottom: '8px'
-};
-
-const subtitleStyle: React.CSSProperties = {
-  color: '#8b949e',
-  fontSize: '14px',
-  marginBottom: '16px'
-};
 

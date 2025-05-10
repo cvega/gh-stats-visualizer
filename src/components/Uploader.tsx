@@ -1,24 +1,13 @@
 import React, { useState } from 'react';
 import Papa from 'papaparse';
-import type { Stats } from '../types';
+import type { Stats } from '../types/stats';
+import type { Repository } from '../types/repository';
 import parseCsvAndCalculateStats from '../utils/parseCsv';
 
-export interface RepoData {
-  Org_Name: string;
-  Repo_Name: string;
-  Issue_Count?: number;
-  Pull_Request_Count?: number;
-  Repo_Size_MB?: number;
-  Created?: string;
-  Last_Push?: string;
-  Branch_Count?: number;
-  Tag_Count?: number;
-  Release_Count?: number;
-  Milestone_Count?: number;
-  Commit_Comment_Count?: number;
+// Using the Repository type for CSV parsing
+export type RepoData = Partial<Repository> & {
   Migration_Issue?: string;
-  [key: string]: any;
-}
+};
 
 interface UploaderProps {
   onStatsReady: (stats: Stats) => void;

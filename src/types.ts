@@ -1,5 +1,9 @@
 // File: src/types.ts
 
+// This file is kept for backward compatibility
+// New code should import directly from src/types/
+export * from './types';
+
 export interface RepoData {
   Org_Name?: string;
   Repo_Name?: string;
@@ -34,7 +38,7 @@ export interface Stats {
   orgData: { name: string; value: number }[];
   yearData: { year: number; count: number }[];
   branchData: { name: string; value: number }[];
-  largestRepos: { name: string; size: number }[];
+  largestRepos: { name: string; value: number }[];
   mostActiveRepos: { name: string; issues: number; prs: number; total: number }[];
   newestRepos: { name: string; created: string }[];
   oldestRepos: { name: string; created: string }[];

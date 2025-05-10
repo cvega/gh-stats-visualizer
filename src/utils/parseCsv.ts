@@ -1,21 +1,4 @@
-import type { Stats } from '../types';
-
-export interface RepoData {
-  Org_Name: string;
-  Repo_Name: string;
-  Issue_Count?: number;
-  Pull_Request_Count?: number;
-  Repo_Size_MB?: number;
-  Created?: string;
-  Last_Push?: string;
-  Branch_Count?: number;
-  Tag_Count?: number;
-  Release_Count?: number;
-  Milestone_Count?: number;
-  Commit_Comment_Count?: number;
-  Migration_Issue?: string;
-  [key: string]: any;
-}
+import type { Stats, RepoData } from '../types';
 
 export default function parseCsvAndCalculateStats(data: RepoData[]): Stats {
   // Fix common header typos
@@ -69,25 +52,25 @@ export default function parseCsvAndCalculateStats(data: RepoData[]): Stats {
     .sort((a, b) => b.value - a.value);
 
   const now = new Date();
-  const updateBuckets = {
-    'Updated in last week': 0,
-    'Updated in last month': 0,
-    'Updated in last quarter': 0,
-    'Updated in last year': 0,
-    'Not updated in 1-2 years': 0,
-    'Not updated in over 2 years': 0,
+  const updateBuckets: Record<string, number> = {
+    'Past week': 0,
+    'Past month': 0,
+    'Past 3 months': 0,
+    'Past year': 0,
+    '1-2 years ago': 0,
+    '2+ years ago': 0,
   };
 
   data.forEach((repo) => {
     if (!repo.Last_Push) return;
     const lastPush = new Date(repo.Last_Push);
     const days = (now.getTime() - lastPush.getTime()) / (1000 * 60 * 60 * 24);
-    if (days < 7) updateBuckets['Updated in last week']++;
-    else if (days < 30) updateBuckets['Updated in last month']++;
-    else if (days < 90) updateBuckets['Updated in last quarter']++;
-    else if (days < 365) updateBuckets['Updated in last year']++;
-    else if (days < 730) updateBuckets['Not updated in 1-2 years']++;
-    else updateBuckets['Not updated in over 2 years']++;
+    if (days < 7) updateBuckets['Past week']++;
+    else if (days < 30) updateBuckets['Past month']++;
+    else if (days < 90) updateBuckets['Past 3 months']++;
+    else if (days < 365) updateBuckets['Past year']++;
+    else if (days < 730) updateBuckets['1-2 years ago']++;
+    else updateBuckets['2+ years ago']++;
   });
 
   const updateData = Object.entries(updateBuckets).map(([name, value]) => ({ name, value }));
@@ -144,7 +127,7 @@ export default function parseCsvAndCalculateStats(data: RepoData[]): Stats {
     .slice(0, 10)
     .map(repo => ({
       name: `${repo.Org_Name}/${repo.Repo_Name}`,
-      size: repo.Repo_Size_MB || 0,
+      value: repo.Repo_Size_MB || 0,
     }));
 
   const mostActiveRepos = [...data]
@@ -200,7 +183,7 @@ export default function parseCsvAndCalculateStats(data: RepoData[]): Stats {
       };
     })
     .sort((a, b) => b.ageInDays - a.ageInDays)
-    .slice(0, 15);
+    .slice(0, 10);
 
   const metadataRatios = data
     .map(r => {
