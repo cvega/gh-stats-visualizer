@@ -1,5 +1,3 @@
-// File: src/components/Dashboard/SizeBar.tsx
-
 import React from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer

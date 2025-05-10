@@ -1,6 +1,4 @@
-// File: src/components/Dashboard/Tables.tsx
-
-import React from 'react';
+import '../../styles/TableCard.css';
 import { chartCardStyle, titleStyle } from './styles';
 
 interface RepoDate {
@@ -37,16 +35,16 @@ function RepoTable({
   fullWidth?: boolean;
 }) {
   return (
-    <div style={{
-      ...chartCardStyle,
-      ...(fullWidth ? { gridColumn: '1 / -1', marginTop: '32px' } : {})
-    }}>
-      <h3 style={titleStyle}>{title}</h3>
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+    <div
+      className="table-card"
+      style={fullWidth ? { gridColumn: '1 / -1', marginTop: '32px' } : {}}
+    >
+      <h3>{title}</h3>
+      <table>
         <thead>
           <tr style={{ borderBottom: '1px solid #30363d' }}>
-            <th style={thStyle}>Repository</th>
-            <th style={{ ...thStyle, textAlign: 'right' }}>
+            <th>Repository</th>
+            <th style={{ textAlign: 'right' }}>
               {dateKey === 'created' ? 'Created Date' : 'Last Push Date'}
             </th>
           </tr>
@@ -59,8 +57,8 @@ function RepoTable({
                 borderBottom: index < data.length - 1 ? '1px solid #21262d' : 'none'
               }}
             >
-              <td style={tdStyle}>{repo.name}</td>
-              <td style={{ ...tdStyle, textAlign: 'right' }}>{repo[dateKey]}</td>
+              <td>{repo.name}</td>
+              <td style={{ textAlign: 'right' }}>{repo[dateKey]}</td>
             </tr>
           ))}
         </tbody>
@@ -73,21 +71,7 @@ const gridStyle: React.CSSProperties = {
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
   gap: '24px',
-  marginBottom: '24px',
-  marginTop: '24px'
-};
-
-const thStyle: React.CSSProperties = {
-  textAlign: 'left',
-  padding: '8px 16px',
-  color: '#8b949e',
-  fontWeight: 600,
-  fontSize: '14px'
-};
-
-const tdStyle: React.CSSProperties = {
-  padding: '8px 16px',
-  color: '#c9d1d9',
-  fontSize: '14px'
+  // marginBottom: '24px',
+  // marginTop: '24px'
 };
 

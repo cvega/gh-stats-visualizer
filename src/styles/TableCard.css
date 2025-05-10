@@ -1,0 +1,41 @@
+.table-card {
+  background: #161b22 !important;
+  border-radius: 6px !important;
+  border: 1px solid #30363d !important;
+  padding: 24px 16px !important; /* More vertical padding */
+  margin: 0 !important;
+  box-shadow: none !important;
+  display: block !important;
+}
+
+.table-card h3 {
+  color: white !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  margin: 0 0 20px 0 !important; /* More space below the title */
+}
+
+.table-card table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+}
+
+.table-card th,
+.table-card td {
+  padding: 10px 12px !important; /* More space in table cells */
+  font-size: 15px !important;
+}
+
+.table-card th {
+  color: #8b949e !important;
+  font-weight: 600 !important;
+}
+
+.table-card td {
+  color: #c9d1d9 !important;
+}
+
+.table-card th:first-child,
+.table-card td:first-child {
+  text-align: left !important;
+} 
