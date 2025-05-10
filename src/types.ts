@@ -19,7 +19,7 @@ export interface RepoData {
   Branch_Count?: number;
   Last_Push?: string;
   Created?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface Stats {

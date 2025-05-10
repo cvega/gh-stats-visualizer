@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import Papa from 'papaparse';
-import type { Stats } from '../types/stats';
 import type { Repository } from '../types/repository';
 import parseCsvAndCalculateStats from '../utils/parseCsv';
+import type { Stats } from '../types/stats';
 
 // Using the Repository type for CSV parsing
 export type RepoData = Partial<Repository> & {
   Migration_Issue?: string;
 };
 
+// Define the props type with minimal interface
+// Define the props type
 interface UploaderProps {
-  onStatsReady: (stats: Stats) => void;
+  onStatsReady: (_stats: Stats) => void;  // underscore avoids no‑unused‑vars
 }
+
 
 export default function Uploader({ onStatsReady }: UploaderProps) {
   const [file, setFile] = useState<File | null>(null);
@@ -49,9 +52,11 @@ export default function Uploader({ onStatsReady }: UploaderProps) {
 
       const stats = parseCsvAndCalculateStats(parsed.data);
       onStatsReady(stats);
-    } catch (err: any) {
-      console.error('CSV parse error:', err);
-      setError('Failed to parse and process CSV file.');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error('CSV parse error:', err);
+        setError('Failed to parse and process CSV file.');
+      }
     } finally {
       setLoading(false);
     }

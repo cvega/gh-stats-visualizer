@@ -1,5 +1,5 @@
+import React from 'react';
 import '../../styles/TableCard.css';
-import { chartCardStyle, titleStyle } from './styles';
 
 interface RepoDate {
   name: string;

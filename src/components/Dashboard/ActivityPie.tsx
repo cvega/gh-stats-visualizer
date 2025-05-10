@@ -30,7 +30,7 @@ export default function ActivityPie({ data }: Props) {
               cy="50%"
               outerRadius={125}
               label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-              style={{ fontSize: 16 }}
+              style={{ fontSize: 12 }}
             >
               {data.map((entry) => (
                 <Cell key={entry.name} fill={ACTIVITY_COLORS[entry.name]} />

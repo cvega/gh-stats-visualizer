@@ -17,6 +17,8 @@ import LargestRepos from './Dashboard/LargestRepos';
 import MostActive from './Dashboard/MostActive';
 import Tables from './Dashboard/Tables';
 import Footer from './Dashboard/Footer';
+import { ChartSection } from './Dashboard/ChartSection';
+import { chartCellStyle, formatSize } from './Dashboard/dashboardUtils';
 
 interface DashboardProps {
   stats: Stats;
@@ -45,58 +47,64 @@ export default function Dashboard({ stats }: DashboardProps) {
           marginBottom: '24px',
         }}
       >
-        <StatCard title="Total Repositories" value={stats.basic.totalRepos} />
-        <StatCard title="Total Storage Size" value={formatSize(stats.basic.totalSize)} color="#f78166" />
-        <StatCard title="Total Issues" value={stats.basic.totalIssues} color="#3fb950" />
-        <StatCard title="Total Pull Requests" value={stats.basic.totalPRs} color="#ad6eff" />
+        {/* Stat Cards */}
+        {[
+          { title: 'Total Repositories', value: stats.basic.totalRepos },
+          { title: 'Total Storage Size', value: formatSize(stats.basic.totalSize), color: '#f78166' },
+          { title: 'Total Issues', value: stats.basic.totalIssues, color: '#3fb950' },
+          { title: 'Total Pull Requests', value: stats.basic.totalPRs, color: '#ad6eff' }
+        ].map((card) => (
+          <StatCard key={card.title} {...card} />
+        ))}
 
-        <div style={chartCellStyle}><ActivityPie data={stats.activityData} /></div>
-        <div style={chartCellStyle}><SizeBar data={stats.sizeData} /></div>
-        <div style={chartCellStyle}><UpdateBar data={stats.updateData} /></div>
-        <div style={chartCellStyle}><CreationLine data={stats.yearData} /></div>
-        <div style={chartCellStyle}><OrgBar data={stats.orgData} /></div>
-        <div style={chartCellStyle}><BranchBar data={stats.branchData} /></div>
+        {/* Charts: DataPoint[] */}
+        <div style={chartCellStyle}>
+          <ActivityPie data={stats.activityData} />
+        </div>
+        <div style={chartCellStyle}>
+          <SizeBar data={stats.sizeData} />
+        </div>
+        <div style={chartCellStyle}>
+          <UpdateBar data={stats.updateData} />
+        </div>
+        <div style={chartCellStyle}>
+          <CreationLine data={stats.yearData} />
+        </div>
+        <div style={chartCellStyle}>
+          <OrgBar data={stats.orgData} />
+        </div>
+        <div style={chartCellStyle}>
+          <BranchBar data={stats.branchData} />
+        </div>
       </div>
 
-      {/* Full-Width Charts */}
-      <div style={{ marginBottom: '24px' }}>
+      {/* Full-Width Charts: Individual calls for type safety */}
+      <ChartSection>
         <MetadataRatio data={stats.metadataRatios} />
-      </div>
-      <div style={{ marginBottom: '24px' }}>
+      </ChartSection>
+      <ChartSection>
         <BranchComplexity data={stats.branchComplexity} />
-      </div>
-      <div style={{ marginBottom: '24px' }}>
+      </ChartSection>
+      <ChartSection>
         <TagRelease data={stats.tagReleaseFrequency} />
-      </div>
-      <div style={{ marginBottom: '24px' }}>
+      </ChartSection>
+      <ChartSection>
         <RepoAge data={stats.repositoryAge} />
-      </div>
-      <div style={{ marginBottom: '24px' }}>
+      </ChartSection>
+      <ChartSection>
         <LargestRepos data={stats.largestRepos} />
-      </div>
-      <div style={{ marginBottom: '24px' }}>
+      </ChartSection>
+      <ChartSection>
         <MostActive data={stats.mostActiveRepos} />
-      </div>
+      </ChartSection>
+
+      {/* Tables */}
       <Tables
         newest={stats.newestRepos}
         oldest={stats.oldestRepos}
         updated={stats.recentlyUpdated}
       />
-      
-
       <Footer />
     </div>
   );
-}
-
-const chartCellStyle: React.CSSProperties = {
-  gridColumn: 'span 2',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'stretch',
-  height: '100%',
-};
-
-function formatSize(size: number): string {
-  return size >= 1000 ? `${(size / 1000).toFixed(2)} GB` : `${size.toFixed(0)} MB`;
 }

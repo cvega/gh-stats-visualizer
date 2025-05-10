@@ -4,12 +4,12 @@ export default function parseCsvAndCalculateStats(data: RepoData[]): Stats {
   // Fix common header typos
   data.forEach((repo) => {
     if ('ilestone_Count' in repo) {
-      repo.Milestone_Count = (repo as any).ilestone_Count;
-      delete (repo as any).ilestone_Count;
+      repo.Milestone_Count = (repo as Record<string, unknown>)['ilestone_Count'] as number | undefined;
+      delete (repo as Record<string, unknown>)['ilestone_Count'];
     }
     if ('igration_Issue' in repo) {
-      repo.Migration_Issue = (repo as any).igration_Issue;
-      delete (repo as any).igration_Issue;
+      repo.Migration_Issue = (repo as Record<string, unknown>)['igration_Issue'] as string | undefined;
+      delete (repo as Record<string, unknown>)['igration_Issue'];
     }
   });
 

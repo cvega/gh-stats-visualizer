@@ -13,12 +13,6 @@ const formatSize = (size: number) =>
 const formatRepoName = (name: string) => name.split('/').pop() || name;
 
 export default function LargestRepos({ data }: Props) {
-  console.log('LargestRepos data:', data);
-  console.log('Data type:', typeof data);
-  console.log('Is array?', Array.isArray(data));
-  console.log('First item:', data?.[0]);
-  console.log('Data length:', data?.length);
-  console.log('All items:', data?.map(item => ({ name: item.name, value: item.value })));
   return (
     <div style={chartCardStyle}>
       <h3 style={titleStyle}>Top 10 Largest Repositories</h3>
