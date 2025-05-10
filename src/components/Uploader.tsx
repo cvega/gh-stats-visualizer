@@ -9,7 +9,6 @@ export type RepoData = Partial<Repository> & {
   Migration_Issue?: string;
 };
 
-// Define the props type with minimal interface
 // Define the props type
 interface UploaderProps {
   onStatsReady: (_stats: Stats) => void;  // underscore avoids no‑unused‑vars

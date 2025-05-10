@@ -3,13 +3,13 @@ import type { Stats, RepoData } from '../types';
 export default function parseCsvAndCalculateStats(data: RepoData[]): Stats {
   // Fix common header typos
   data.forEach((repo) => {
-    if ('ilestone_Count' in repo) {
-      repo.Milestone_Count = (repo as Record<string, unknown>)['ilestone_Count'] as number | undefined;
-      delete (repo as Record<string, unknown>)['ilestone_Count'];
+    if ('Milestone_Count' in repo) {
+      repo.Milestone_Count = (repo as Record<string, unknown>)['Milestone_Count'] as number | undefined;
+      delete (repo as Record<string, unknown>)['Milestone_Count'];
     }
-    if ('igration_Issue' in repo) {
-      repo.Migration_Issue = (repo as Record<string, unknown>)['igration_Issue'] as string | undefined;
-      delete (repo as Record<string, unknown>)['igration_Issue'];
+    if ('Migration_Issue' in repo) {
+      repo.Migration_Issue = (repo as Record<string, unknown>)['Migration_Issue'] as string | undefined;
+      delete (repo as Record<string, unknown>)['Migration_Issue'];
     }
   });
 
