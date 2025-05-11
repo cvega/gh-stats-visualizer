@@ -4,8 +4,10 @@
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
-  "baseUrl": "src",
-  "paths": {
-    "@styles": ["styles.ts"]
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@styles": ["styles.ts"]
+    }
   }
 }
