@@ -44,14 +44,14 @@ export const chartContainerStyle: CSSProperties = {
 // Typography styles
 export const titleStyle: CSSProperties = {
   color: 'white',
-  fontSize: '14px',
+  fontSize: '16px',
   fontWeight: 500,
   margin: 0
 };
 
 export const subtitleStyle: CSSProperties = {
   color: '#8b949e',
-  fontSize: '12px',
+  fontSize: '14px',
   margin: 0
 };
 
@@ -77,7 +77,7 @@ export const footerStyle: CSSProperties = {
   fontSize: '12px'
 };
 
-export const statCardStyle: React.CSSProperties = {
+export const statCardStyle: CSSProperties = {
   backgroundColor: '#161b22',
   padding: '16px',
   borderRadius: '6px',
@@ -87,24 +87,24 @@ export const statCardStyle: React.CSSProperties = {
   justifyContent: 'center'
 };
 
-export const statLabelStyle: React.CSSProperties = {
+export const statLabelStyle: CSSProperties = {
   fontSize: '16px',
   color: '#8b949e',
   marginBottom: '4px'
 };
 
-export const statValueStyle: React.CSSProperties = {
+export const statValueStyle: CSSProperties = {
   fontSize: '20px',
   fontWeight: 'bold'
 };
 
-export const tablesGridStyle: React.CSSProperties = {
+export const tablesGridStyle: CSSProperties = {
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
   gap: '24px',
 };
 
-export const tableCardStyle: React.CSSProperties = {
+export const tableCardStyle: CSSProperties = {
   background: '#161b22',
   borderRadius: '6px',
   border: '1px solid #30363d',
@@ -114,32 +114,32 @@ export const tableCardStyle: React.CSSProperties = {
   display: 'block',
 };
 
-export const tableCardTitleStyle: React.CSSProperties = {
+export const tableCardTitleStyle: CSSProperties = {
   color: 'white',
   fontSize: '16px',
   fontWeight: 600,
   margin: '0 0 20px 0',
 };
 
-export const tableStyle: React.CSSProperties = {
+export const tableStyle: CSSProperties = {
   width: '100%',
   borderCollapse: 'collapse',
 };
 
-export const tableCellStyle: React.CSSProperties = {
+export const tableCellStyle: CSSProperties = {
   padding: '10px 12px',
   fontSize: '15px',
 };
 
-export const tableHeaderStyle: React.CSSProperties = {
+export const tableHeaderStyle: CSSProperties = {
   color: '#8b949e',
   fontWeight: 600,
 };
 
-export const tableBodyCellStyle: React.CSSProperties = {
+export const tableBodyCellStyle: CSSProperties = {
   color: '#c9d1d9',
 };
 
-export const tableFirstColStyle: React.CSSProperties = {
+export const tableFirstColStyle: CSSProperties = {
   textAlign: 'left',
 };

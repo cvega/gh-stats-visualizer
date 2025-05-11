@@ -26,7 +26,7 @@ interface RepoStats {
   Branch_Count: number;
   Tag_Count: number;
   Discussion_Count: number;
-  Has_Wiki: boolean;
+  Has_Wiki: number;
   Repo_URL: string;
   Migration_Issue: boolean;
   Created: string;
@@ -98,10 +98,10 @@ function generateRepoStats(orgNames?: string[]): RepoStats {
     issueCommentCount: Math.floor(activityLevel * 1.8),
     issueEventCount: Math.floor(activityLevel * 0.8),
     releaseCount: Math.floor(activityLevel * 0.3),
-    projectCount: Math.floor(activityLevel * 0.08),
+    projectCount: Math.floor(activityLevel * 0.5),
     branchCount: Math.floor(activityLevel * 0.6) + 1,
     tagCount: Math.floor(activityLevel * 0.3),
-    discussionCount: Math.floor(activityLevel * 0.15),
+    discussionCount: Math.floor(activityLevel * 0.8),
   };
 
   // Add some randomness to the base metrics
@@ -134,7 +134,7 @@ function generateRepoStats(orgNames?: string[]): RepoStats {
     Branch_Count: addRandomness(baseOtherMetrics.branchCount),
     Tag_Count: addRandomness(baseOtherMetrics.tagCount),
     Discussion_Count: addRandomness(baseOtherMetrics.discussionCount),
-    Has_Wiki: faker.datatype.boolean(0.7),
+    Has_Wiki: faker.datatype.boolean(0.7) ? 1 : 0,
     Repo_URL: `https://github.com/${orgName}/${repoName}`,
     Migration_Issue: faker.datatype.boolean(0.1),
     Created: created

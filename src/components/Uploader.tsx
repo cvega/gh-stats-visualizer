@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import Papa from 'papaparse';
+import type { Stats } from '../types/stats';
 import type { Repository } from '../types/repository';
 import parseCsvAndCalculateStats from '../utils/parseCsv';
-import type { Stats } from '../types/stats';
-
-// Using the Repository type for CSV parsing
-export type RepoData = Partial<Repository> & {
-  Migration_Issue?: string;
-};
 
 // Define the props type
 interface UploaderProps {
@@ -39,10 +34,19 @@ export default function Uploader({ onStatsReady }: UploaderProps) {
 
     try {
       const text = await file.text();
-      const parsed = Papa.parse<RepoData>(text, {
+      const parsed = Papa.parse<Repository>(text, {
         header: true,
         dynamicTyping: true,
         skipEmptyLines: true,
+        transform: (value, field) => {
+          if (['Has_Wiki'].includes(String(field))) {
+            return value === 'True' ? 1 : 0;
+          }
+          if (['Is_Empty', 'Is_Fork', 'Is_Archived', 'Migration_Issue'].includes(String(field))) {
+            return String(value).toLowerCase() === 'true';
+          }
+          return value;
+        }
       });
 
       if (parsed.errors.length > 0) {
@@ -69,14 +73,14 @@ export default function Uploader({ onStatsReady }: UploaderProps) {
       maxWidth: '600px',
       margin: '40px auto'
     }}>
-      <h2 style={{
+      <div style={{
         color: 'white',
         marginBottom: '16px',
         fontSize: '20px',
         fontWeight: 600
       }}>
         Upload GitHub Repository CSV
-      </h2>
+      </div>
 
       {error && (
         <div style={{

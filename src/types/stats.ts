@@ -14,6 +14,20 @@ export interface BasicStats {
   totalCommitComments: number;
   totalMilestones: number;
   totalReleases: number;
+  totalCollaborators: number;
+  totalProtectedBranches: number;
+  totalProjects: number;
+  totalTags: number;
+  totalIssueComments: number;
+  totalPRReviewComments: number;
+  totalBranches: number;
+  totalDiscussions: number;
+  totalPRReviews: number;
+  totalIssueEvents: number;
+  totalWikis: number;
+  totalForks: number;
+  totalArchived: number;
+  totalEmpty: number;
 }
 
 export interface DataPoint {
@@ -43,4 +57,9 @@ export interface Stats {
   branchComplexity: RepositoryComplexity[];
   tagReleaseFrequency: RepositoryReleaseInfo[];
   repositoryAge: RepositoryAge[];
+  collaborationStats: {
+    collaboratorDistribution: { range: string; count: number }[];
+    topCollaboratorRepos: { name: string; collaboratorCount: number }[];
+    featureDistribution: { feature: string; count: number; total: number }[];
+  };
 } 

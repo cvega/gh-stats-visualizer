@@ -13,6 +13,19 @@ export interface Repository {
   Branch_Count: number;
   Last_Push: string;
   Created: string;
+  Collaborator_Count: number;
+  Protected_Branch_Count: number;
+  Project_Count: number;
+  Has_Wiki: number;
+  Discussion_Count: number;
+  PR_Review_Count: number;
+  Issue_Event_Count: number;
+  Is_Empty: boolean;
+  Is_Fork: boolean;
+  Is_Archived: boolean;
+  Last_Update: string;
+  Repo_URL: string;
+  Migration_Issue: boolean;
 }
 
 export interface RepositoryAge {

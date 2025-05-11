@@ -1,6 +1,8 @@
-import type { Stats, RepoData } from '../types';
+import type { Stats } from '../types/stats';
+import type { Repository } from '../types/repository';
+import { calculateCollaborationStats } from './collaborationStats';
 
-export default function parseCsvAndCalculateStats(data: RepoData[]): Stats {
+export default function parseCsvAndCalculateStats(data: Repository[]): Stats {
   const totalRepos = data.length;
   const totalSize = data.reduce((sum, repo) => sum + (repo.Repo_Size_MB || 0), 0);
   const totalIssues = data.reduce((sum, repo) => sum + (repo.Issue_Count || 0), 0);
@@ -8,6 +10,20 @@ export default function parseCsvAndCalculateStats(data: RepoData[]): Stats {
   const totalCommitComments = data.reduce((sum, repo) => sum + (repo.Commit_Comment_Count || 0), 0);
   const totalMilestones = data.reduce((sum, repo) => sum + (repo.Milestone_Count || 0), 0);
   const totalReleases = data.reduce((sum, repo) => sum + (repo.Release_Count || 0), 0);
+  const totalCollaborators = data.reduce((sum, repo) => sum + (repo.Collaborator_Count || 0), 0);
+  const totalProtectedBranches = data.reduce((sum, repo) => sum + (repo.Protected_Branch_Count || 0), 0);
+  const totalProjects = data.reduce((sum, repo) => sum + (repo.Project_Count || 0), 0);
+  const totalTags = data.reduce((sum, repo) => sum + (repo.Tag_Count || 0), 0);
+  const totalIssueComments = data.reduce((sum, repo) => sum + (repo.Issue_Comment_Count || 0), 0);
+  const totalPRReviewComments = data.reduce((sum, repo) => sum + (repo.PR_Review_Comment_Count || 0), 0);
+  const totalBranches = data.reduce((sum, repo) => sum + (repo.Branch_Count || 0), 0);
+  const totalDiscussions = data.reduce((sum, repo) => sum + (repo.Discussion_Count || 0), 0);
+  const totalPRReviews = data.reduce((sum, repo) => sum + (repo.PR_Review_Count || 0), 0);
+  const totalIssueEvents = data.reduce((sum, repo) => sum + (repo.Issue_Event_Count || 0), 0);
+  const totalWikis = data.reduce((sum, repo) => sum + (repo.Has_Wiki || 0), 0);
+  const totalForks = data.filter(repo => repo.Is_Fork).length;
+  const totalArchived = data.filter(repo => repo.Is_Archived).length;
+  const totalEmpty = data.filter(repo => repo.Is_Empty === true).length;
 
   const activityLevels = {
     'No activity': 0,
@@ -243,6 +259,20 @@ export default function parseCsvAndCalculateStats(data: RepoData[]): Stats {
       totalCommitComments,
       totalMilestones,
       totalReleases,
+      totalCollaborators,
+      totalProtectedBranches,
+      totalProjects,
+      totalTags,
+      totalIssueComments,
+      totalPRReviewComments,
+      totalBranches,
+      totalDiscussions,
+      totalPRReviews,
+      totalIssueEvents,
+      totalWikis,
+      totalForks,
+      totalArchived,
+      totalEmpty
     },
     activityData,
     orgData,
@@ -259,5 +289,6 @@ export default function parseCsvAndCalculateStats(data: RepoData[]): Stats {
     branchComplexity,
     tagReleaseFrequency,
     repositoryAge,
+    collaborationStats: calculateCollaborationStats(data as Repository[])
   };
 }

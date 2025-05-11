@@ -1,6 +1,3 @@
-// File: src/components/Dashboard/StatCard.tsx
-
-import React from 'react';
 import { statCardStyle, statLabelStyle, statValueStyle } from './styles';
 
 interface Props {
@@ -17,4 +14,3 @@ export default function StatCard({ title, value, color = '#238636' }: Props) {
     </div>
   );
 }
-

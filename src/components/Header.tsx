@@ -1,7 +1,3 @@
-// File: src/components/Header.tsx
-
-import React from 'react';
-
 interface HeaderProps {
   onReset: () => void;
 }

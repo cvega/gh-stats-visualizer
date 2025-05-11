@@ -19,6 +19,11 @@ export interface RepoData {
   Branch_Count?: number;
   Last_Push?: string;
   Created?: string;
+  Collaborator_Count?: number;
+  Protected_Branch_Count?: number;
+  Project_Count?: number;
+  Has_Wiki?: number;
+  Discussion_Count?: number;
   [key: string]: unknown;
 }
 
@@ -31,6 +36,9 @@ export interface Stats {
     totalCommitComments: number;
     totalMilestones: number;
     totalReleases: number;
+    totalCollaborators: number;
+    totalProtectedBranches: number;
+    totalProjects: number;
   };
   activityData: { name: string; value: number }[];
   sizeData: { name: string; value: number }[];
@@ -66,5 +74,10 @@ export interface Stats {
     ageInDays: number;
     ageInYears: number;
   }[];
+  collaborationStats: {
+    collaboratorDistribution: { range: string; count: number }[];
+    topCollaboratorRepos: { name: string; collaboratorCount: number }[];
+    featureDistribution: { feature: string; count: number; total: number }[];
+  };
 }
 

@@ -1,8 +1,12 @@
 import type { Stats } from '../types/stats';
+import { containerStyle, gridStyle, chartCellStyle } from './Dashboard/styles';
 
+import SummaryHeader from './Dashboard/SummaryHeader';
+import Footer from './Dashboard/Footer';
+
+import StatCard from './Dashboard/StatCard';
 import BranchComplexity from './Dashboard/bar/BranchComplexity';
 import BranchDistribution from './Dashboard/bar/BranchDistribution';
-import Footer from './Dashboard/Footer';
 import OrganizationRepositoryDistribution from './Dashboard/bar/OrganizationRepositoryDistribution';
 import RepositoryActivityDistribution from './Dashboard/bar/RepositoryActivityDistribution';
 import RepositoryActivityLevels from './Dashboard/pie/RepositoryActivityLevels';
@@ -11,31 +15,43 @@ import RepositoryCreationTime from './Dashboard/line/RepositoryCreationTime';
 import RepositoryMetadataRatio from './Dashboard/bar/RepositoryMetadataRatio';
 import RepositorySizeDistribution from './Dashboard/bar/RepositorySizeDistribution';
 import RepositorySizeLargest from './Dashboard/bar/RepositorySizeLargest';
+import RepositoryTable from './Dashboard/tables/Repository';
 import RepositoryTagReleaseFrequency from './Dashboard/bar/RepositoryTagReleaseFrequency';
 import RepositoryUpdateFrequency from './Dashboard/bar/RepositoryUpdateFrequency';
-import DashboardHeader from './Dashboard/DashboardHeader';
-import StatCard from './Dashboard/StatCard';
-import RepositoryTable from './Dashboard/tables/Repository';
-import { containerStyle, gridStyle, chartCellStyle } from './Dashboard/styles';
 
-interface DashboardProps {
+import { CollaboratorDistribution } from './Dashboard/bar/RepoCollaboratorDistribution';
+import { Collaborators } from './Dashboard/tables/Collaborators';
+import { RepositoryFeatureDistribution } from './Dashboard/pie/RepositoryFeatureDistribution';
+
+interface DashboardProps {  
   stats: Stats;
 }
 
 export default function Dashboard({ stats }: DashboardProps) {
   return (
     <div style={containerStyle}>
-      <DashboardHeader
+      <SummaryHeader
         title={`Analysis of ${stats.basic.totalRepos.toLocaleString()} repositories`}
         description={`Across ${stats.orgData.length} organizations`}
       />
 
       <div style={gridStyle}>
         {[
-          { title: 'Total Repositories', value: stats.basic.totalRepos },
           { title: 'Total Storage Size', value: formatSize(stats.basic.totalSize), color: '#f78166' },
           { title: 'Total Issues', value: stats.basic.totalIssues, color: '#3fb950' },
-          { title: 'Total Pull Requests', value: stats.basic.totalPRs, color: '#ad6eff' }
+          { title: 'Total Pull Requests', value: stats.basic.totalPRs, color: '#ad6eff' },
+          { title: 'Total Collaborators', value: stats.basic.totalCollaborators, color: '#ff7b72' },
+          { title: 'Protected Branches', value: stats.basic.totalProtectedBranches, color: '#79c0ff' },
+          { title: 'Total Wikis Enabled', value: stats.basic.totalWikis, color: '#f78166' },
+          { title: 'Total Forks', value: stats.basic.totalForks, color: '#ad6eff' },
+          { title: 'Total Archived Repos', value: stats.basic.totalArchived, color: '#3fb950' },
+          { title: 'Total Empty Repos', value: stats.basic.totalEmpty, color: '#ff7b72' },
+          { title: 'Total Projects', value: stats.basic.totalProjects, color: '#79c0ff' },
+          { title: 'Total Tags', value: stats.basic.totalTags, color: '#ad6eff' },
+          { title: 'Total Discussions', value: stats.basic.totalDiscussions, color: '#3fb950' },
+          { title: 'Total PR Reviews', value: stats.basic.totalPRReviews, color: '#f78166' },
+          { title: 'Total Issue Events', value: stats.basic.totalIssueEvents, color: '#ad6eff' },
+          { title: 'Total Milestones', value: stats.basic.totalMilestones, color: '#3fb950' },
         ].map((card) => (
           <StatCard key={card.title} {...card} />
         ))}
@@ -58,6 +74,12 @@ export default function Dashboard({ stats }: DashboardProps) {
         <div style={chartCellStyle}>
           <BranchDistribution data={stats.branchData} />
         </div>  
+        <div style={chartCellStyle}>
+          <CollaboratorDistribution stats={stats} />
+        </div>
+        <div style={chartCellStyle}>
+          <RepositoryFeatureDistribution stats={stats} />
+        </div>
       </div>
 
       <RepositoryMetadataRatio data={stats.metadataRatios} />
@@ -74,7 +96,8 @@ export default function Dashboard({ stats }: DashboardProps) {
         <div style={chartCellStyle}>
           <RepositoryTable data={stats.oldestRepos} title="Oldest" limit={10} />
         </div>
-        <RepositoryTable data={stats.recentlyUpdated} fullWidth title="Most Recently Updated" limit={20} />
+          <Collaborators stats={stats} fullWidth limit={10} />
+          <RepositoryTable data={stats.recentlyUpdated} fullWidth title="Most Recently Updated" limit={20} />
       </div>
       <Footer />
     </div>
