@@ -1,5 +1,5 @@
 import type { Stats } from "../types/stats";
-import { containerStyle, gridStyle, chartCellStyle } from "../styles";
+import { containerStyle, gridStyle, chartCellStyle } from '@styles';
 
 import SummaryHeader from "./Dashboard/SummaryHeader";
 import Footer from "./Dashboard/Footer";

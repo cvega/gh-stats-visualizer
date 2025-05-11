@@ -13,7 +13,7 @@ import {
   titleStyle,
   tooltipStyle,
   tooltipItemStyle,
-} from "../../../styles";
+} from "@styles";
 import type { Stats } from "../../../types";
 
 interface Props {

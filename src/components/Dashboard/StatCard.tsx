@@ -1,4 +1,4 @@
-import { statCardStyle, statLabelStyle, statValueStyle } from "../../styles";
+import { statCardStyle, statLabelStyle, statValueStyle } from "@styles";
 
 interface Props {
   title: string;

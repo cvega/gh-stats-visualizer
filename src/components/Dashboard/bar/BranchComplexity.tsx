@@ -14,7 +14,7 @@ import {
   titleStyle,
   tooltipStyle,
   tooltipItemStyle,
-} from "../../../styles";
+} from "@styles";
 
 interface Props {
   data: {

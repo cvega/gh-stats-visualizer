@@ -1,10 +1,17 @@
 // vite.config.ts
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
   base: '/gh-stats-visualizer/',
+  resolve: {
+    alias: {
+      '@styles': path.resolve(__dirname, './src/styles.ts'),
+      '@types': path.resolve(__dirname, './src/types.ts'),
+    }
+  },
   build: {
     // Improve cache busting configuration
     rollupOptions: {

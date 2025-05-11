@@ -6,7 +6,7 @@ import {
   titleStyle,
   tooltipStyle,
   tooltipItemStyle,
-} from "../../../styles";
+} from "@styles";
 
 const FEATURE_COLORS: Record<string, string> = {
   Issues: "#58a6ff", // blue

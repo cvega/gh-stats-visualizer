@@ -7,7 +7,7 @@ import {
   tableHeaderStyle,
   tableBodyCellStyle,
   tableFirstColStyle,
-} from "../../../styles";
+} from "@styles";
 
 interface Props {
   stats: Stats;

@@ -5,7 +5,7 @@ import {
   chartCardStyle,
   chartContainerStyle,
   titleStyle
-} from '../../../styles';
+} from '@styles';
 
 interface Props {
   data: { name: string; value: number }[];

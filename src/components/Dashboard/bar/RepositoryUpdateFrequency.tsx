@@ -7,7 +7,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { chartCardStyle, chartContainerStyle, titleStyle } from "../../../styles";
+import { chartCardStyle, chartContainerStyle, titleStyle } from "@styles";
 
 interface Props {
   data: { name: string; value: number }[];

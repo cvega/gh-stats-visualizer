@@ -5,7 +5,7 @@ import {
   titleStyle,
   tooltipStyle,
   tooltipItemStyle,
-} from "../../../styles";
+} from "@styles";
 
 const ACTIVITY_COLORS: Record<string, string> = {
   "No activity": "#6e7681", // or pick a palette color

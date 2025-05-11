@@ -14,7 +14,7 @@ import {
   tooltipStyle,
   tooltipItemStyle,
   chartCardStyle,
-} from "../../../styles";
+} from "@styles";
 
 interface Props {
   data: {

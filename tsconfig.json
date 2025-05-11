@@ -7,7 +7,8 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@styles": ["styles.ts"]
+      "@styles": ["styles"],
+      "@types": ["types"]
     }
   }
 }

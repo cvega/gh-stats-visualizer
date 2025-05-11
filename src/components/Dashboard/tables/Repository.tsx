@@ -6,7 +6,7 @@ import {
   tableHeaderStyle,
   tableBodyCellStyle,
   tableFirstColStyle,
-} from "../../../styles";
+} from "@styles";
 
 interface Repo {
   name: string;
