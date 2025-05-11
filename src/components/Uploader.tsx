@@ -168,21 +168,15 @@ export default function Uploader({ onStatsReady }: UploaderProps) {
         onClick={handleAnalyzeClick}
         disabled={loading || !file}
         style={{
-          color: "#c9d1d9",
-            fontSize: "14px",
-            maxWidth: "100%",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
           backgroundColor: loading ? "#21262d" : "#238636",
-          //color: "white",
+          color: "white",
           padding: "8px 16px",
           borderRadius: "6px",
           border: "none",
           cursor: loading || !file ? "not-allowed" : "pointer",
           opacity: loading || !file ? 0.7 : 1,
           width: "100%",
-          //fontSize: "14px",
+          fontSize: "14px",
           fontWeight: 500,
           height: "38px",
         }}
