@@ -1,17 +1,23 @@
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
-import type { Stats } from '../../../types';
-import { chartCardStyle, chartContainerStyle, titleStyle, tooltipStyle, tooltipItemStyle } from '../styles';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import type { Stats } from "../../../types";
+import {
+  chartCardStyle,
+  chartContainerStyle,
+  titleStyle,
+  tooltipStyle,
+  tooltipItemStyle,
+} from "../../../styles";
 
 const FEATURE_COLORS: Record<string, string> = {
-  'Issues': '#58a6ff',      // blue
-  'Pull Requests': '#3fb950', // green
-  'Discussions': '#ad6eff',   // purple
-  'Projects': '#f78166',      // orange
-  'Wiki': '#6e7681',          // gray
-  'Protected Branches': '#e3b341', // yellow/gold
-  'Milestones': '#ff7b72',     // coral
+  Issues: "#58a6ff", // blue
+  "Pull Requests": "#3fb950", // green
+  Discussions: "#ad6eff", // purple
+  Projects: "#f78166", // orange
+  Wiki: "#6e7681", // gray
+  "Protected Branches": "#e3b341", // yellow/gold
+  Milestones: "#ff7b72", // coral
 };
-const FALLBACK_COLOR = '#8b949e'; // fallback gray
+const FALLBACK_COLOR = "#8b949e"; // fallback gray
 
 interface Props {
   stats: Stats;
@@ -26,10 +32,10 @@ export function RepositoryFeatureDistribution({ stats }: Props) {
     0
   );
 
-  const data = stats.collaborationStats.featureDistribution.map(item => ({
+  const data = stats.collaborationStats.featureDistribution.map((item) => ({
     name: item.feature,
     value: item.count,
-    percentage: ((item.count / totalCount) * 100).toFixed(1)
+    percentage: ((item.count / totalCount) * 100).toFixed(1),
   }));
 
   return (
@@ -49,7 +55,10 @@ export function RepositoryFeatureDistribution({ stats }: Props) {
               style={{ fontSize: 12 }}
             >
               {data.map((entry) => (
-                <Cell key={entry.name} fill={FEATURE_COLORS[entry.name] || FALLBACK_COLOR} />
+                <Cell
+                  key={entry.name}
+                  fill={FEATURE_COLORS[entry.name] || FALLBACK_COLOR}
+                />
               ))}
             </Pie>
             <Tooltip
@@ -62,4 +71,4 @@ export function RepositoryFeatureDistribution({ stats }: Props) {
       </div>
     </div>
   );
-} 
+}

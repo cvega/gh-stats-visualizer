@@ -6,16 +6,15 @@ import {
   ResponsiveContainer,
   Tooltip,
   XAxis,
-  YAxis
-} from 'recharts';
+  YAxis,
+} from "recharts";
 import {
   chartCardStyle,
   chartContainerStyle,
   titleStyle,
   tooltipItemStyle,
-  tooltipStyle
-} from '../styles';
-
+  tooltipStyle,
+} from "../../../styles";
 
 interface Props {
   data: {
@@ -28,7 +27,7 @@ interface Props {
 
 export default function RepositoryMetadataRatio({ data }: Props) {
   return (
-    <div style={{...chartCardStyle,  marginBottom: '24px'}}>
+    <div style={{ ...chartCardStyle, marginBottom: "24px" }}>
       <h3 style={titleStyle}>Code to Metadata Ratio</h3>
       <div style={chartContainerStyle}>
         <ResponsiveContainer width="100%" height={400}>
@@ -46,10 +45,10 @@ export default function RepositoryMetadataRatio({ data }: Props) {
               stroke="#8b949e"
               tick={({ x, y, payload }) => {
                 let repo = payload.value;
-                if (repo.includes('/')) {
-                  repo = repo.split('/').pop();
+                if (repo.includes("/")) {
+                  repo = repo.split("/").pop();
                 }
-                const label = repo.length > 18 ? repo.slice(0, 18) + '…' : repo;
+                const label = repo.length > 18 ? repo.slice(0, 18) + "…" : repo;
                 return (
                   <text
                     x={x}

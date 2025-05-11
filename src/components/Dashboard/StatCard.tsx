@@ -1,4 +1,4 @@
-import { statCardStyle, statLabelStyle, statValueStyle } from './styles';
+import { statCardStyle, statLabelStyle, statValueStyle } from "../../styles";
 
 interface Props {
   title: string;
@@ -6,7 +6,7 @@ interface Props {
   color?: string;
 }
 
-export default function StatCard({ title, value, color = '#238636' }: Props) {
+export default function StatCard({ title, value, color = "#238636" }: Props) {
   return (
     <div style={statCardStyle}>
       <div style={statLabelStyle}>{title}</div>

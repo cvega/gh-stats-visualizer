@@ -1,7 +1,19 @@
 import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
-} from 'recharts';
-import { chartCardStyle, chartContainerStyle, titleStyle, tooltipStyle, tooltipItemStyle } from '../styles';
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import {
+  chartCardStyle,
+  chartContainerStyle,
+  titleStyle,
+  tooltipStyle,
+  tooltipItemStyle,
+} from "../../../styles";
 
 interface Props {
   data: { year: number; count: number }[];
@@ -20,25 +32,22 @@ export default function RepositoryCreationTime({ data }: Props) {
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#30363d" />
-            <XAxis 
-              dataKey="year" 
-              stroke="#8b949e" 
-              tick={{ fontSize: 12 }}
-            />
-            <YAxis 
-              stroke="#8b949e" 
-              tick={{ fontSize: 12 }}
-            />
+            <XAxis dataKey="year" stroke="#8b949e" tick={{ fontSize: 12 }} />
+            <YAxis stroke="#8b949e" tick={{ fontSize: 12 }} />
             <Tooltip
               contentStyle={tooltipStyle}
               formatter={(value: number) => formatNumber(value)}
               itemStyle={tooltipItemStyle}
             />
-            <Line type="monotone" dataKey="count" stroke="#3fb950" name="Repositories Created" />
+            <Line
+              type="monotone"
+              dataKey="count"
+              stroke="#3fb950"
+              name="Repositories Created"
+            />
           </LineChart>
         </ResponsiveContainer>
       </div>
     </div>
   );
 }
-

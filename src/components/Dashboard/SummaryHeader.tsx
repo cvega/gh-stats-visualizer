@@ -1,4 +1,4 @@
-import { titleStyle, subtitleStyle } from './styles';
+import { titleStyle, subtitleStyle } from "../../styles";
 
 interface Props {
   title: string;
@@ -7,7 +7,7 @@ interface Props {
 
 export default function SummaryHeader({ title, description }: Props) {
   return (
-    <div style={{ marginBottom: '24px', marginTop: '24px' }}>
+    <div style={{ marginBottom: "24px", marginTop: "24px" }}>
       <h3 style={titleStyle}>{title}</h3>
       {description && <p style={subtitleStyle}>{description}</p>}
     </div>

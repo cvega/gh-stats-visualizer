@@ -1,7 +1,11 @@
-import React from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
+import {
+  chartCardStyle,
+  chartContainerStyle,
+  titleStyle
+} from '../../../styles';
 
 interface Props {
   data: { name: string; value: number }[];
@@ -58,28 +62,3 @@ export default function RepositorySizeDistribution({ data }: Props) {
     </div>
   );
 }
-
-const chartCardStyle: React.CSSProperties = {
-  backgroundColor: '#161b22',
-  padding: '16px',
-  borderRadius: '6px',
-  border: '1px solid #30363d',
-  height: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '16px'
-};
-
-const chartContainerStyle: React.CSSProperties = {
-  flex: 1,
-  minHeight: 0 // Important for flex child to respect parent height
-};
-
-const titleStyle: React.CSSProperties = {
-  color: 'white',
-  fontSize: '14px',
-  fontWeight: 500,
-  margin: 0
-};
-
-

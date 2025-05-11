@@ -1,7 +1,13 @@
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
-} from 'recharts';
-import { chartCardStyle, chartContainerStyle, titleStyle } from '../styles';
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import { chartCardStyle, chartContainerStyle, titleStyle } from "../../../styles";
 
 interface Props {
   data: { name: string; value: number }[];
@@ -31,14 +37,14 @@ export default function BranchDistribution({ data }: Props) {
             <YAxis stroke="#8b949e" tick={{ fontSize: 12 }} />
             <Tooltip
               contentStyle={{
-                backgroundColor: '#0d1117',
-                borderColor: '#30363d',
-                color: '#c9d1d9',
-                borderRadius: '6px',
-                fontSize: '12px'
+                backgroundColor: "#0d1117",
+                borderColor: "#30363d",
+                color: "#c9d1d9",
+                borderRadius: "6px",
+                fontSize: "12px",
               }}
               formatter={(value: number) => formatNumber(value)}
-              itemStyle={{ color: '#c9d1d9' }}
+              itemStyle={{ color: "#c9d1d9" }}
             />
             <Bar dataKey="value" fill="#238636" name="Repositories" />
           </BarChart>
@@ -47,4 +53,3 @@ export default function BranchDistribution({ data }: Props) {
     </div>
   );
 }
-

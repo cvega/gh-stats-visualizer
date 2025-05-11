@@ -1,7 +1,19 @@
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
-} from 'recharts';
-import { chartCardStyle, chartContainerStyle, titleStyle, tooltipStyle, tooltipItemStyle } from '../styles';
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import {
+  chartCardStyle,
+  chartContainerStyle,
+  titleStyle,
+  tooltipStyle,
+  tooltipItemStyle,
+} from "../../../styles";
 
 interface Props {
   data: { name: string; value: number }[];
@@ -30,7 +42,7 @@ export default function OrganizationRepositoryDistribution({ data }: Props) {
               tick={({ x, y, payload }) => {
                 const label =
                   payload.value.length > 14
-                    ? payload.value.slice(0, 14) + '…'
+                    ? payload.value.slice(0, 14) + "…"
                     : payload.value;
                 return (
                   <text
@@ -59,4 +71,3 @@ export default function OrganizationRepositoryDistribution({ data }: Props) {
     </div>
   );
 }
-

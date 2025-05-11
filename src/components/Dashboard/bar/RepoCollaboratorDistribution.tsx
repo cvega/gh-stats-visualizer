@@ -1,6 +1,20 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import type { Stats } from '../../../types';
-import { chartCardStyle, chartContainerStyle, titleStyle, tooltipStyle, tooltipItemStyle } from '../styles';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import {
+  chartCardStyle,
+  chartContainerStyle,
+  titleStyle,
+  tooltipStyle,
+  tooltipItemStyle,
+} from "../../../styles";
+import type { Stats } from "../../../types";
 
 interface Props {
   stats: Stats;
@@ -34,4 +48,4 @@ export function CollaboratorDistribution({ stats }: Props) {
       </div>
     </div>
   );
-} 
+}

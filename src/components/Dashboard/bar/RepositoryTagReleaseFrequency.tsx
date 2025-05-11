@@ -6,15 +6,15 @@ import {
   ResponsiveContainer,
   Tooltip,
   XAxis,
-  YAxis
-} from 'recharts';
+  YAxis,
+} from "recharts";
 import {
   chartCardStyle,
   chartContainerStyle,
   titleStyle,
   tooltipItemStyle,
-  tooltipStyle
-} from '../styles';
+  tooltipStyle,
+} from "../../../styles";
 
 interface Props {
   data: {
@@ -30,7 +30,7 @@ interface Props {
 
 export default function RepositoryTagReleaseFrequency({ data }: Props) {
   return (
-    <div style={{...chartCardStyle,  marginBottom: '24px'}}>
+    <div style={{ ...chartCardStyle, marginBottom: "24px" }}>
       <h3 style={titleStyle}>Tag & Release Frequency</h3>
       <div style={chartContainerStyle}>
         <ResponsiveContainer width="100%" height={400}>
@@ -48,10 +48,10 @@ export default function RepositoryTagReleaseFrequency({ data }: Props) {
               stroke="#8b949e"
               tick={({ x, y, payload }) => {
                 let repo = payload.value;
-                if (repo.includes('/')) {
-                  repo = repo.split('/').pop();
+                if (repo.includes("/")) {
+                  repo = repo.split("/").pop();
                 }
-                const label = repo.length > 18 ? repo.slice(0, 18) + '…' : repo;
+                const label = repo.length > 18 ? repo.slice(0, 18) + "…" : repo;
                 return (
                   <text
                     x={x}
@@ -73,12 +73,21 @@ export default function RepositoryTagReleaseFrequency({ data }: Props) {
               itemStyle={tooltipItemStyle}
             />
             <Legend />
-            <Bar dataKey="tagsPerYear" stackId="a" fill="#3fb950" name="Tags per Year" />
-            <Bar dataKey="releasesPerYear" stackId="a" fill="#58a6ff" name="Releases per Year" />
+            <Bar
+              dataKey="tagsPerYear"
+              stackId="a"
+              fill="#3fb950"
+              name="Tags per Year"
+            />
+            <Bar
+              dataKey="releasesPerYear"
+              stackId="a"
+              fill="#58a6ff"
+              name="Releases per Year"
+            />
           </BarChart>
         </ResponsiveContainer>
       </div>
     </div>
   );
 }
-

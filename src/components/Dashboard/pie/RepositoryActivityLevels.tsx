@@ -1,12 +1,18 @@
-import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { chartCardStyle, chartContainerStyle, titleStyle, tooltipStyle, tooltipItemStyle } from '../styles';
+import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import {
+  chartCardStyle,
+  chartContainerStyle,
+  titleStyle,
+  tooltipStyle,
+  tooltipItemStyle,
+} from "../../../styles";
 
 const ACTIVITY_COLORS: Record<string, string> = {
-  'No activity': '#6e7681',      // or pick a palette color
-  'Low activity': '#3fb950',     // green
-  'Medium activity': '#58a6ff',  // blue
-  'High activity': '#ad6eff',    // purple
-  'Very high activity': '#f78166'// orange
+  "No activity": "#6e7681", // or pick a palette color
+  "Low activity": "#3fb950", // green
+  "Medium activity": "#58a6ff", // blue
+  "High activity": "#ad6eff", // purple
+  "Very high activity": "#f78166", // orange
 };
 
 interface Props {
@@ -29,7 +35,9 @@ export default function RepositoryActivityLevels({ data }: Props) {
               cx="50%"
               cy="50%"
               outerRadius={125}
-              label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+              label={({ name, percent }) =>
+                `${name}: ${(percent * 100).toFixed(0)}%`
+              }
               style={{ fontSize: 12 }}
             >
               {data.map((entry) => (
@@ -47,4 +55,3 @@ export default function RepositoryActivityLevels({ data }: Props) {
     </div>
   );
 }
-
