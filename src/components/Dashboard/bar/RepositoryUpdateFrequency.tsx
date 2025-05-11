@@ -1,7 +1,7 @@
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
-import { chartCardStyle, chartContainerStyle, titleStyle } from './styles';
+import { chartCardStyle, chartContainerStyle, titleStyle } from '../styles';
 
 interface Props {
   data: { name: string; value: number }[];
@@ -9,7 +9,7 @@ interface Props {
 
 const formatNumber = (num: number) => num.toLocaleString();
 
-export default function UpdateBar({ data }: Props) {
+export default function RepositoryUpdateFrequency({ data }: Props) {
   return (
     <div style={chartCardStyle}>
       <h3 style={titleStyle}>Repository Update Frequency</h3>

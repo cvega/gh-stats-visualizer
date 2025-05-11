@@ -1,7 +1,7 @@
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
-import { chartCardStyle, chartContainerStyle, titleStyle, tooltipStyle, tooltipItemStyle } from './styles';
+import { chartCardStyle, chartContainerStyle, titleStyle, tooltipStyle, tooltipItemStyle } from '../styles';
 
 interface Props {
   data: { year: number; count: number }[];
@@ -9,7 +9,7 @@ interface Props {
 
 const formatNumber = (num: number) => num.toLocaleString();
 
-export default function CreationLine({ data }: Props) {
+export default function RepositoryCreationTime({ data }: Props) {
   return (
     <div style={chartCardStyle}>
       <h3 style={titleStyle}>Repository Creation Timeline</h3>

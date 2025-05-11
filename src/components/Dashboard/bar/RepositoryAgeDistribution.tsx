@@ -1,7 +1,7 @@
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
 } from 'recharts';
-import { chartCardStyle, chartContainerStyle, titleStyle, tooltipStyle, tooltipItemStyle } from './styles';
+import { chartContainerStyle, titleStyle, tooltipStyle, tooltipItemStyle, chartCardStyle } from '../styles';
 
 interface Props {
   data: {
@@ -11,9 +11,9 @@ interface Props {
   }[];
 }
 
-export default function RepoAge({ data }: Props) {
+export default function RepositoryAgeDistribution({ data }: Props) {
   return (
-    <div style={chartCardStyle}>
+    <div style={{...chartCardStyle,  marginBottom: '24px'}}>
       <h3 style={titleStyle}>Repository Age</h3>
       <div style={chartContainerStyle}>
         <ResponsiveContainer width="100%" height={400}>

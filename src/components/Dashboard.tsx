@@ -1,24 +1,22 @@
-import React from 'react';
 import type { Stats } from '../types/stats';
 
-import StatCard from './Dashboard/StatCard';
-import SectionHeader from './Dashboard/SectionHeader';
-import ActivityPie from './Dashboard/ActivityPie';
-import UpdateBar from './Dashboard/UpdateBar';
-import OrgBar from './Dashboard/OrgBar';
-import SizeBar from './Dashboard/SizeBar';
-import CreationLine from './Dashboard/CreationLine';
-import BranchBar from './Dashboard/BranchBar';
-import MetadataRatio from './Dashboard/MetadataRatio';
-import BranchComplexity from './Dashboard/BranchComplexity';
-import TagRelease from './Dashboard/TagRelease';
-import RepoAge from './Dashboard/RepoAge';
-import LargestRepos from './Dashboard/LargestRepos';
-import MostActive from './Dashboard/MostActive';
-import Tables from './Dashboard/Tables';
+import BranchComplexity from './Dashboard/bar/BranchComplexity';
+import BranchDistribution from './Dashboard/bar/BranchDistribution';
 import Footer from './Dashboard/Footer';
-import { ChartSection } from './Dashboard/ChartSection';
-import { chartCellStyle, formatSize } from './Dashboard/dashboardUtils';
+import OrganizationRepositoryDistribution from './Dashboard/bar/OrganizationRepositoryDistribution';
+import RepositoryActivityDistribution from './Dashboard/bar/RepositoryActivityDistribution';
+import RepositoryActivityLevels from './Dashboard/pie/RepositoryActivityLevels';
+import RepositoryAgeDistribution from './Dashboard/bar/RepositoryAgeDistribution';
+import RepositoryCreationTime from './Dashboard/line/RepositoryCreationTime';
+import RepositoryMetadataRatio from './Dashboard/bar/RepositoryMetadataRatio';
+import RepositorySizeDistribution from './Dashboard/bar/RepositorySizeDistribution';
+import RepositorySizeLargest from './Dashboard/bar/RepositorySizeLargest';
+import RepositoryTagReleaseFrequency from './Dashboard/bar/RepositoryTagReleaseFrequency';
+import RepositoryUpdateFrequency from './Dashboard/bar/RepositoryUpdateFrequency';
+import DashboardHeader from './Dashboard/DashboardHeader';
+import StatCard from './Dashboard/StatCard';
+import RepositoryTable from './Dashboard/tables/Repository';
+import { containerStyle, gridStyle, chartCellStyle } from './Dashboard/styles';
 
 interface DashboardProps {
   stats: Stats;
@@ -26,28 +24,13 @@ interface DashboardProps {
 
 export default function Dashboard({ stats }: DashboardProps) {
   return (
-    <div style={{
-      maxWidth: '1280px',
-      margin: '0 auto',
-      padding: '0 16px 48px',
-      backgroundColor: '#0d1117'
-    }}>
-      <SectionHeader
+    <div style={containerStyle}>
+      <DashboardHeader
         title={`Analysis of ${stats.basic.totalRepos.toLocaleString()} repositories`}
         description={`Across ${stats.orgData.length} organizations`}
       />
 
-      {/* Unified Grid Layout */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '24px',
-          alignItems: 'stretch',
-          marginBottom: '24px',
-        }}
-      >
-        {/* Stat Cards */}
+      <div style={gridStyle}>
         {[
           { title: 'Total Repositories', value: stats.basic.totalRepos },
           { title: 'Total Storage Size', value: formatSize(stats.basic.totalSize), color: '#f78166' },
@@ -57,54 +40,52 @@ export default function Dashboard({ stats }: DashboardProps) {
           <StatCard key={card.title} {...card} />
         ))}
 
-        {/* Charts: DataPoint[] */}
         <div style={chartCellStyle}>
-          <ActivityPie data={stats.activityData} />
+          <RepositoryActivityLevels data={stats.activityData} />
         </div>
         <div style={chartCellStyle}>
-          <SizeBar data={stats.sizeData} />
+          <RepositorySizeDistribution data={stats.sizeData} />
         </div>
         <div style={chartCellStyle}>
-          <UpdateBar data={stats.updateData} />
+          <RepositoryUpdateFrequency data={stats.updateData} />
         </div>
         <div style={chartCellStyle}>
-          <CreationLine data={stats.yearData} />
+          <RepositoryCreationTime data={stats.yearData} />
         </div>
         <div style={chartCellStyle}>
-          <OrgBar data={stats.orgData} />
+          <OrganizationRepositoryDistribution data={stats.orgData} />
         </div>
         <div style={chartCellStyle}>
-          <BranchBar data={stats.branchData} />
-        </div>
+          <BranchDistribution data={stats.branchData} />
+        </div>  
       </div>
 
-      {/* Full-Width Charts: Individual calls for type safety */}
-      <ChartSection>
-        <MetadataRatio data={stats.metadataRatios} />
-      </ChartSection>
-      <ChartSection>
-        <BranchComplexity data={stats.branchComplexity} />
-      </ChartSection>
-      <ChartSection>
-        <TagRelease data={stats.tagReleaseFrequency} />
-      </ChartSection>
-      <ChartSection>
-        <RepoAge data={stats.repositoryAge} />
-      </ChartSection>
-      <ChartSection>
-        <LargestRepos data={stats.largestRepos} />
-      </ChartSection>
-      <ChartSection>
-        <MostActive data={stats.mostActiveRepos} />
-      </ChartSection>
-
-      {/* Tables */}
-      <Tables
-        newest={stats.newestRepos}
-        oldest={stats.oldestRepos}
-        updated={stats.recentlyUpdated}
-      />
+      <RepositoryMetadataRatio data={stats.metadataRatios} />
+      <BranchComplexity data={stats.branchComplexity} />
+      <RepositoryTagReleaseFrequency data={stats.tagReleaseFrequency} />
+      <RepositoryAgeDistribution data={stats.repositoryAge} />
+      <RepositorySizeLargest data={stats.largestRepos} />
+      <RepositoryActivityDistribution data={stats.mostActiveRepos} />
+      
+      <div style={gridStyle}>
+        <div style={chartCellStyle}>
+          <RepositoryTable data={stats.newestRepos} title="Newest" limit={10} />
+        </div>
+        <div style={chartCellStyle}>
+          <RepositoryTable data={stats.oldestRepos} title="Oldest" limit={10} />
+        </div>
+        <RepositoryTable data={stats.recentlyUpdated} fullWidth title="Most Recently Updated" limit={20} />
+      </div>
       <Footer />
     </div>
   );
+}
+
+function formatSize(sizeMB: number): string {
+  const sizeB = sizeMB * 1024 * 1024;
+  if (sizeB < 1024) return `${sizeB.toFixed(0)} B`;
+  if (sizeB < 1024 * 1024) return `${(sizeB / 1024).toFixed(2)} KB`;
+  if (sizeB < 1024 * 1024 * 1024) return `${(sizeB / 1024 / 1024).toFixed(2)} MB`;
+  if (sizeB < 1024 * 1024 * 1024 * 1024) return `${(sizeB / 1024 / 1024 / 1024).toFixed(2)} GB`;
+  return `${(sizeB / 1024 / 1024 / 1024 / 1024).toFixed(2)} TB`;
 }

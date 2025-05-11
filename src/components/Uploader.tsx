@@ -53,7 +53,6 @@ export default function Uploader({ onStatsReady }: UploaderProps) {
       onStatsReady(stats);
     } catch (err: unknown) {
       if (err instanceof Error) {
-        console.error('CSV parse error:', err);
         setError('Failed to parse and process CSV file.');
       }
     } finally {

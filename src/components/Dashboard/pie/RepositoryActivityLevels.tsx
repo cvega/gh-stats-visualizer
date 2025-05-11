@@ -1,5 +1,5 @@
 import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { chartCardStyle, chartContainerStyle, titleStyle, tooltipStyle, tooltipItemStyle } from './styles';
+import { chartCardStyle, chartContainerStyle, titleStyle, tooltipStyle, tooltipItemStyle } from '../styles';
 
 const ACTIVITY_COLORS: Record<string, string> = {
   'No activity': '#6e7681',      // or pick a palette color
@@ -15,7 +15,7 @@ interface Props {
 
 const formatNumber = (num: number) => num.toLocaleString();
 
-export default function ActivityPie({ data }: Props) {
+export default function RepositoryActivityLevels({ data }: Props) {
   return (
     <div style={chartCardStyle}>
       <h3 style={titleStyle}>Repository Activity Levels</h3>

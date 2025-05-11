@@ -1,4 +1,4 @@
-import React from 'react';
+import { footerStyle } from './styles';
 
 export default function Footer() {
   return (
@@ -10,12 +10,3 @@ export default function Footer() {
     </footer>
   );
 }
-
-const footerStyle: React.CSSProperties = {
-  textAlign: 'center',
-  padding: '24px 0',
-  borderTop: '1px solid #21262d',
-  color: '#8b949e',
-  fontSize: '12px'
-};
-

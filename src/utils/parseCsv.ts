@@ -1,18 +1,6 @@
 import type { Stats, RepoData } from '../types';
 
 export default function parseCsvAndCalculateStats(data: RepoData[]): Stats {
-  // Fix common header typos
-  data.forEach((repo) => {
-    if ('Milestone_Count' in repo) {
-      repo.Milestone_Count = (repo as Record<string, unknown>)['Milestone_Count'] as number | undefined;
-      delete (repo as Record<string, unknown>)['Milestone_Count'];
-    }
-    if ('Migration_Issue' in repo) {
-      repo.Migration_Issue = (repo as Record<string, unknown>)['Migration_Issue'] as string | undefined;
-      delete (repo as Record<string, unknown>)['Migration_Issue'];
-    }
-  });
-
   const totalRepos = data.length;
   const totalSize = data.reduce((sum, repo) => sum + (repo.Repo_Size_MB || 0), 0);
   const totalIssues = data.reduce((sum, repo) => sum + (repo.Issue_Count || 0), 0);
@@ -151,18 +139,18 @@ export default function parseCsvAndCalculateStats(data: RepoData[]): Stats {
 
   const newestRepos = [...validCreated]
     .sort((a, b) => b.created.getTime() - a.created.getTime())
-    .slice(0, 5)
+    .slice(0, 100)
     .map(r => ({ name: r.name, created: r.created.toLocaleDateString() }));
 
   const oldestRepos = [...validCreated]
     .sort((a, b) => a.created.getTime() - b.created.getTime())
-    .slice(0, 5)
+    .slice(0, 100)
     .map(r => ({ name: r.name, created: r.created.toLocaleDateString() }));
 
   const recentlyUpdated = data
     .filter(r => r.Last_Push)
     .sort((a, b) => new Date(b.Last_Push!).getTime() - new Date(a.Last_Push!).getTime())
-    .slice(0, 5)
+    .slice(0, 100)
     .map(r => ({
       name: `${r.Org_Name}/${r.Repo_Name}`,
       lastPush: new Date(r.Last_Push!).toLocaleDateString(),

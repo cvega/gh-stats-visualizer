@@ -128,7 +128,7 @@ export default function calculateStats(data: RepoData[]): Stats {
   const newestRepos = [...data]
     .filter(r => r.Created)
     .sort((a, b) => new Date(b.Created!).getTime() - new Date(a.Created!).getTime())
-    .slice(0, 5)
+    .slice(0, 20)
     .map(repo => ({
       name: `${repo.Org_Name || ''}/${repo.Repo_Name || ''}`,
       created: new Date(repo.Created!).toLocaleDateString(),
@@ -146,7 +146,7 @@ export default function calculateStats(data: RepoData[]): Stats {
   const recentlyUpdated = [...data]
     .filter(r => r.Last_Push)
     .sort((a, b) => new Date(b.Last_Push!).getTime() - new Date(a.Last_Push!).getTime())
-    .slice(0, 5)
+    .slice(0, 20)
     .map(repo => ({
       name: `${repo.Org_Name || ''}/${repo.Repo_Name || ''}`,
       lastPush: new Date(repo.Last_Push!).toLocaleDateString(),

@@ -18,7 +18,7 @@ const transformData = (data: Props['data']) => data.map(item => ({
     .replace(' MB', 'MB')
 }));
 
-export default function SizeBar({ data }: Props) {
+export default function RepositorySizeDistribution({ data }: Props) {
   const transformedData = transformData(data);
   
   return (

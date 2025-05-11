@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker';
 import Papa from 'papaparse';
+import fs from 'fs';
 
 interface RepoStats {
   Org_Name: string;
@@ -142,12 +143,36 @@ function generateRepoStats(orgNames?: string[]): RepoStats {
 
 export function generateTestData(options: GenerateOptions): string {
   const { recordCount, uniqueOrgCount } = options;
+  console.log(`Generating ${recordCount} records with ${uniqueOrgCount} unique organizations...`);
   const orgNames = uniqueOrgCount ? generateUniqueOrgNames(uniqueOrgCount) : undefined;
   
   const data = Array.from({ length: recordCount }, () => generateRepoStats(orgNames));
-  return Papa.unparse(data);
+  const csvData = Papa.unparse(data);
+  console.log('Data generated successfully. First few characters:', csvData.substring(0, 1000));
+  return csvData;
 }
 
 // Example usage:
 // const csvData = generateTestData({ recordCount: 1000, uniqueOrgCount: 10 });
 // console.log(csvData); 
+
+// Handle command line execution
+if (process.argv[1] && process.argv[1].endsWith('generateTestData.ts')) {
+  const recordCount = parseInt(process.argv[2], 10);
+  const uniqueOrgCount = parseInt(process.argv[3], 10);
+  const outputFile = process.argv[4];
+
+  if (isNaN(recordCount) || isNaN(uniqueOrgCount)) {
+    console.error('Usage: npm run generate-data <recordCount> <uniqueOrgCount> [outputFile]');
+    process.exit(1);
+  }
+
+  const csvData = generateTestData({ recordCount, uniqueOrgCount });
+  if (outputFile) {
+    fs.writeFileSync(outputFile, csvData, 'utf8');
+    console.log(`CSV data written to ${outputFile}`);
+  } else {
+    console.log('Final CSV data length:', csvData.length);
+    console.log(csvData);
+  }
+} 
