@@ -40,7 +40,6 @@ export default function Dashboard({ stats }: DashboardProps) {
           { title: 'Total Storage Size', value: formatSize(stats.basic.totalSize), color: '#f78166' },
           { title: 'Total Issues', value: stats.basic.totalIssues, color: '#3fb950' },
           { title: 'Total Pull Requests', value: stats.basic.totalPRs, color: '#ad6eff' },
-          { title: 'Total Collaborators', value: stats.basic.totalCollaborators, color: '#ff7b72' },
           { title: 'Protected Branches', value: stats.basic.totalProtectedBranches, color: '#79c0ff' },
           { title: 'Total Wikis Enabled', value: stats.basic.totalWikis, color: '#f78166' },
           { title: 'Total Forks', value: stats.basic.totalForks, color: '#ad6eff' },
@@ -52,6 +51,8 @@ export default function Dashboard({ stats }: DashboardProps) {
           { title: 'Total PR Reviews', value: stats.basic.totalPRReviews, color: '#f78166' },
           { title: 'Total Issue Events', value: stats.basic.totalIssueEvents, color: '#ad6eff' },
           { title: 'Total Milestones', value: stats.basic.totalMilestones, color: '#3fb950' },
+          { title: 'Total Releases', value: stats.basic.totalReleases, color: '#f78166' },
+          { title: 'Total Commit Comments', value: stats.basic.totalCommitComments, color: '#ad6eff' },
         ].map((card) => (
           <StatCard key={card.title} {...card} />
         ))}
