@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Header from './components/Header';
 import Uploader from './components/Uploader';
 import Dashboard from './components/Dashboard';
-import type { Stats } from './types';
+import type { Stats } from './types/stats';
 
 export default function App() {
   const [stats, setStats] = useState<Stats | null>(null);
