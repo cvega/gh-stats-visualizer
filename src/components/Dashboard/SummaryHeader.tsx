@@ -1,4 +1,4 @@
-import { titleStyle, subtitleStyle } from "../../styles";
+import { titleStyle, subtitleStyle } from "@styles";
 
 interface Props {
   title: string;

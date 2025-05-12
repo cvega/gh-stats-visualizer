@@ -1,9 +1,3 @@
-// File: src/types.ts
-
-// This file is kept for backward compatibility
-// New code should import directly from src/types/
-export * from './types';
-
 export interface RepoData {
   Org_Name?: string;
   Repo_Name?: string;

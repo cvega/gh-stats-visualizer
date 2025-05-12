@@ -56,8 +56,9 @@ export const chartCardStyle: CSSProperties = {
   padding: theme.space.md,
   display: 'flex',
   flexDirection: 'column',
-  gap: theme.space.md,
+  gap: theme.space.lg,
   height: '100%',
+  boxSizing: 'border-box',
 };
 
 export const statCardStyle: CSSProperties = {
@@ -210,4 +211,12 @@ function camelToKebab(s: string) {
     style.textContent = global;
     document.head.appendChild(style);
   })();
+  
+export const dashboardGridStyle: CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, 1fr)',
+  gap: '24px',
+  marginBottom: '24px',
+  marginTop: '24px',
+};
   
