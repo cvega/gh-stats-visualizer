@@ -116,7 +116,7 @@ export default function Upload({
           fontWeight: 600,
         }}
       >
-        Upload GitHub Repository CSV
+        Upload a CSV file
       </div>
 
       {error && (
@@ -142,8 +142,7 @@ export default function Upload({
           fontSize: "14px",
         }}
       >
-        Upload your GitHub repository metadata CSV file to analyze your
-        organization's repositories.
+        Import your GitHub organization's stats data to visualize key metrics and insights
       </p>
 
       <div
