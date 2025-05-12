@@ -125,7 +125,7 @@ The application provides several generic chart components that you can use:
 │   │   │   ├── Utils.tsx       # Shared chart utilities
 │   │   │   └── index.ts        # Chart exports
 │   │   ├── Dashboard/          # Dashboard components
-│   │   │   └── Components.tsx  # Dashboard layout and components
+│   │   │   └── Visualization.tsx  # Dashboard layout and components
 │   │   ├── Dashboard.tsx       # Main dashboard container
 │   │   ├── Footer.tsx          # Application footer
 │   │   ├── GitHubLogo.tsx      # GitHub logo component
