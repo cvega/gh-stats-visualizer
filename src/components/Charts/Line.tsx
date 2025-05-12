@@ -49,7 +49,11 @@ export interface GenericLineChartProps {
   lines: LineConfig[];
   height?: number;
   colors?: string[];
-  formatter?: (value: ValueType, name: NameType, entry: Payload<ValueType, string>) => ReactNode;
+  formatter?: (
+    value: ValueType,
+    name: NameType,
+    entry: Payload<ValueType, string>
+  ) => ReactNode;
   xAxisDataKey?: string;
   margin?: { top: number; right: number; left: number; bottom: number };
   className?: string;

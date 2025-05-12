@@ -1,5 +1,4 @@
-import type { Stats } from "../types/stats";
-import type { Repository } from "../types/repository";
+import type { Stats, Repository } from "@types";
 import { calculateCollaborationStats } from "./collaborationStats";
 
 export default function parseCsvAndCalculateStats(data: Repository[]): Stats {

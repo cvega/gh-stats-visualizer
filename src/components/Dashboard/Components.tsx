@@ -1,12 +1,13 @@
-import type { Stats } from "../../types/stats";
 import type { ValueType } from "recharts/types/component/DefaultTooltipContent";
-import type { 
-  RepositoryAge, 
-  RepositoryComplexity, 
-  RepositoryActivity, 
-  RepositoryMetadata, 
-  RepositoryReleaseInfo 
-} from "../../types/repository";
+import type {
+  Stats,
+  RepositoryAge,
+  RepositoryComplexity,
+  RepositoryActivity,
+  RepositoryMetadata,
+  RepositoryReleaseInfo,
+  BasicStats,
+} from "@types";
 import type { DataItem } from "../Charts/Bar";
 import {
   GenericBarChart,
@@ -18,10 +19,101 @@ import {
   formatRepoName,
   renderVerticalTick,
 } from "../Charts";
-import { dashboardGridStyle } from "../../styles";
-import StatsCardGrid from "./StatsCardGrid";
+import {
+  dashboardGridStyle,
+  gridStyle,
+  statCardStyle,
+  statLabelStyle,
+  statValueStyle,
+  titleStyle,
+  subtitleStyle,
+} from "../../styles";
+import { formatSize } from "../Charts/Utils";
 
-export function RefactoredRepositoryActivityLevels({
+interface SummaryHeaderProps {
+  title: string;
+  description?: string;
+}
+
+export function SummaryHeader({ title, description }: SummaryHeaderProps) {
+  return (
+    <div style={{ marginBottom: "24px", marginTop: "24px" }}>
+      <h3 style={titleStyle}>{title}</h3>
+      {description && <p style={subtitleStyle}>{description}</p>}
+    </div>
+  );
+}
+
+const statDefinitions = [
+  {
+    key: "totalSize",
+    label: "Total Storage Size",
+    color: "#f78166",
+    format: formatSize,
+  },
+  { key: "totalIssues", label: "Total Issues", color: "#3fb950" },
+  { key: "totalPRs", label: "Total Pull Requests", color: "#ad6eff" },
+  {
+    key: "totalProtectedBranches",
+    label: "Protected Branches",
+    color: "#79c0ff",
+  },
+  { key: "totalWikis", label: "Total Wikis Enabled", color: "#f78166" },
+  { key: "totalForks", label: "Total Forks", color: "#ad6eff" },
+  { key: "totalArchived", label: "Total Archived Repos", color: "#3fb950" },
+  { key: "totalEmpty", label: "Total Empty Repos", color: "#ff7b72" },
+  { key: "totalProjects", label: "Total Projects", color: "#79c0ff" },
+  { key: "totalTags", label: "Total Tags", color: "#ad6eff" },
+  { key: "totalDiscussions", label: "Total Discussions", color: "#3fb950" },
+  { key: "totalPRReviews", label: "Total PR Reviews", color: "#f78166" },
+  { key: "totalIssueEvents", label: "Total Issue Events", color: "#ad6eff" },
+  { key: "totalMilestones", label: "Total Milestones", color: "#3fb950" },
+  { key: "totalReleases", label: "Total Releases", color: "#f78166" },
+  {
+    key: "totalCommitComments",
+    label: "Total Commit Comments",
+    color: "#ad6eff",
+  },
+];
+
+// Inline StatCard definition
+function StatCard({
+  title,
+  value,
+  color = "#238636",
+}: {
+  title: string;
+  value: string | number;
+  color?: string;
+}) {
+  return (
+    <div style={statCardStyle}>
+      <div style={statLabelStyle}>{title}</div>
+      <div style={{ ...statValueStyle, color }}>{value}</div>
+    </div>
+  );
+}
+
+function StatsCardGrid({ stats }: { stats: BasicStats }) {
+  return (
+    <div style={gridStyle}>
+      {statDefinitions.map(({ key, label, color, format }) => (
+        <StatCard
+          key={key}
+          title={label}
+          value={
+            format
+              ? format(stats[key as keyof typeof stats])
+              : stats[key as keyof typeof stats]
+          }
+          color={color}
+        />
+      ))}
+    </div>
+  );
+}
+
+export function RepositoryActivityLevels({
   data,
 }: {
   data: { name: string; value: number }[];
@@ -43,7 +135,7 @@ export function RefactoredRepositoryActivityLevels({
 }
 
 // Example refactoring of RepositorySizeDistribution
-export function RefactoredRepositorySizeDistribution({
+export function RepositorySizeDistribution({
   data,
 }: {
   data: { name: string; value: number }[];
@@ -75,7 +167,7 @@ export function RefactoredRepositorySizeDistribution({
 }
 
 // Example refactoring of RepositoryUpdateFrequency
-export function RefactoredRepositoryUpdateFrequency({
+export function RepositoryUpdateFrequency({
   data,
 }: {
   data: { name: string; value: number }[];
@@ -95,14 +187,14 @@ export function RefactoredRepositoryUpdateFrequency({
 }
 
 // Example refactoring of RepositoryCreationTime
-export function RefactoredRepositoryCreationTime({
+export function RepositoryCreationTime({
   data,
 }: {
   data: { year: number; count: number }[];
 }) {
-  const lineData = data.map(item => ({
+  const lineData = data.map((item) => ({
     name: item.year.toString(),
-    value: item.count
+    value: item.count,
   }));
 
   return (
@@ -123,7 +215,7 @@ export function RefactoredRepositoryCreationTime({
 }
 
 // Example refactoring of RepositorySizeLargest
-export function RefactoredRepositorySizeLargest({
+export function RepositorySizeLargest({
   data,
 }: {
   data: { name: string; value: number }[];
@@ -151,7 +243,7 @@ export function RefactoredRepositorySizeLargest({
 }
 
 // Example refactoring of RepositoryTable
-export function RefactoredRepositoryTable({
+export function RepositoryTable({
   data,
   title = "Repositories",
   limit,
@@ -181,7 +273,7 @@ export function RefactoredRepositoryTable({
   );
 }
 
-export function RefactoredDashboardSection({ stats }: { stats: Stats }) {
+export function DashboardSection({ stats }: { stats: Stats }) {
   return (
     <div>
       {/* Stat cards */}
@@ -190,45 +282,33 @@ export function RefactoredDashboardSection({ stats }: { stats: Stats }) {
       {/* Main chart grid */}
       <div style={dashboardGridStyle}>
         {/* Pie and Bar Charts */}
-        <RefactoredRepositoryActivityLevels data={stats.activityData} />
-        <RefactoredRepositorySizeDistribution data={stats.sizeData} />
-        <RefactoredRepositoryUpdateFrequency data={stats.updateData} />
-        <RefactoredRepositoryCreationTime data={stats.yearData} />
-        <RefactoredBranchDistribution data={stats.branchData} />
-        <RefactoredOrganizationRepositoryDistribution data={stats.orgData} />
-        <RefactoredRepoCollaboratorDistribution stats={stats} />
-        <RefactoredRepositoryFeatureDistribution stats={stats} />
-        <RefactoredBranchComplexity data={stats.branchComplexity} />
-        <RefactoredRepositoryActivityDistribution
-          data={stats.mostActiveRepos}
-        />
-        <RefactoredRepositoryAgeDistribution data={stats.repositoryAge} />
-        <RefactoredRepositoryMetadataRatio data={stats.metadataRatios} />
-        <RefactoredRepositoryTagReleaseFrequency
-          data={stats.tagReleaseFrequency}
-        />
-        <RefactoredRepositorySizeLargest data={stats.largestRepos} />
+        <RepositoryActivityLevels data={stats.activityData} />
+        <RepositorySizeDistribution data={stats.sizeData} />
+        <RepositoryUpdateFrequency data={stats.updateData} />
+        <RepositoryCreationTime data={stats.yearData} />
+        <BranchDistribution data={stats.branchData} />
+        <OrganizationRepositoryDistribution data={stats.orgData} />
+        <RepoCollaboratorDistribution stats={stats} />
+        <RepositoryFeatureDistribution stats={stats} />
+        <BranchComplexity data={stats.branchComplexity} />
+        <RepositoryActivityDistribution data={stats.mostActiveRepos} />
+        <RepositoryAgeDistribution data={stats.repositoryAge} />
+        <RepositoryMetadataRatio data={stats.metadataRatios} />
+        <RepositoryTagReleaseFrequency data={stats.tagReleaseFrequency} />
+        <RepositorySizeLargest data={stats.largestRepos} />
       </div>
 
       {/* Largest Repos */}
 
       {/* Tables grid */}
       <div style={dashboardGridStyle}>
-        <RefactoredRepositoryTable
-          data={stats.newestRepos}
-          title="Newest"
-          limit={10}
-        />
-        <RefactoredRepositoryTable
-          data={stats.oldestRepos}
-          title="Oldest"
-          limit={10}
-        />
-        <RefactoredCollaborators stats={stats} limit={10} />
+        <RepositoryTable data={stats.newestRepos} title="Newest" limit={10} />
+        <RepositoryTable data={stats.oldestRepos} title="Oldest" limit={10} />
+        <Collaborators stats={stats} limit={10} />
       </div>
 
       {/* Recently updated table */}
-      <RefactoredRepositoryTable
+      <RepositoryTable
         data={stats.recentlyUpdated}
         title="Most Recently Updated"
         limit={20}
@@ -238,14 +318,14 @@ export function RefactoredDashboardSection({ stats }: { stats: Stats }) {
   );
 }
 
-export function RefactoredBranchComplexity({ data }: { data: RepositoryComplexity[] }) {
-  const chartData: DataItem[] = data.map(item => ({
+export function BranchComplexity({ data }: { data: RepositoryComplexity[] }) {
+  const chartData: DataItem[] = data.map((item) => ({
     name: item.name,
     complexityBySize: item.complexityBySize,
     complexityByAge: item.complexityByAge,
     branches: item.branches,
     size: item.size,
-    age: item.age
+    age: item.age,
   }));
 
   return (
@@ -280,7 +360,11 @@ export function RefactoredBranchComplexity({ data }: { data: RepositoryComplexit
   );
 }
 
-export function RefactoredBranchDistribution({ data }: { data: { name: string; value: number }[] }) {
+export function BranchDistribution({
+  data,
+}: {
+  data: { name: string; value: number }[];
+}) {
   return (
     <GenericBarChart
       title="Branch Distribution"
@@ -304,7 +388,7 @@ export function RefactoredBranchDistribution({ data }: { data: { name: string; v
   );
 }
 
-export function RefactoredOrganizationRepositoryDistribution({
+export function OrganizationRepositoryDistribution({
   data,
 }: {
   data: { name: string; value: number }[];
@@ -336,15 +420,11 @@ export function RefactoredOrganizationRepositoryDistribution({
   );
 }
 
-export function RefactoredRepoCollaboratorDistribution({
-  stats,
-}: {
-  stats: Stats;
-}) {
+export function RepoCollaboratorDistribution({ stats }: { stats: Stats }) {
   const data = stats.collaborationStats.collaboratorDistribution;
-  const chartData = data.map(item => ({
+  const chartData = data.map((item) => ({
     name: item.range,
-    value: item.count
+    value: item.count,
   }));
 
   return (
@@ -370,16 +450,16 @@ export function RefactoredRepoCollaboratorDistribution({
   );
 }
 
-export function RefactoredRepositoryActivityDistribution({
+export function RepositoryActivityDistribution({
   data,
 }: {
   data: RepositoryActivity[];
 }) {
-  const chartData: DataItem[] = data.map(item => ({
+  const chartData: DataItem[] = data.map((item) => ({
     name: item.name,
     issues: item.issues,
     prs: item.prs,
-    total: item.total
+    total: item.total,
   }));
 
   return (
@@ -422,11 +502,11 @@ export function RefactoredRepositoryActivityDistribution({
   );
 }
 
-export function RefactoredRepositoryAgeDistribution({ data }: { data: RepositoryAge[] }) {
-  const chartData: DataItem[] = data.map(item => ({
+export function RepositoryAgeDistribution({ data }: { data: RepositoryAge[] }) {
+  const chartData: DataItem[] = data.map((item) => ({
     name: item.name,
     ageInYears: item.ageInYears,
-    ageInDays: item.ageInDays
+    ageInDays: item.ageInDays,
   }));
 
   return (
@@ -461,12 +541,14 @@ export function RefactoredRepositoryAgeDistribution({ data }: { data: Repository
   );
 }
 
-export function RefactoredRepositoryMetadataRatio({ data }: { data: RepositoryMetadata[] }) {
-  const chartData: DataItem[] = data.map(item => ({
+export function RepositoryMetadataRatio({
+  data,
+}: {
+  data: RepositoryMetadata[];
+}) {
+  const chartData: DataItem[] = data.map((item) => ({
     name: item.name,
     ratio: item.ratio,
-    size: item.size,
-    metadata: item.metadata
   }));
 
   return (
@@ -501,19 +583,19 @@ export function RefactoredRepositoryMetadataRatio({ data }: { data: RepositoryMe
   );
 }
 
-export function RefactoredRepositoryTagReleaseFrequency({
+export function RepositoryTagReleaseFrequency({
   data,
 }: {
   data: RepositoryReleaseInfo[];
 }) {
-  const chartData: DataItem[] = data.map(item => ({
+  const chartData: DataItem[] = data.map((item) => ({
     name: item.name,
     tagsPerYear: item.tagsPerYear,
     releasesPerYear: item.releasesPerYear,
     tags: item.tags,
     releases: item.releases,
     age: item.age,
-    total: item.total
+    total: item.total,
   }));
 
   return (
@@ -555,11 +637,7 @@ export function RefactoredRepositoryTagReleaseFrequency({
   );
 }
 
-export function RefactoredRepositoryFeatureDistribution({
-  stats,
-}: {
-  stats: Stats;
-}) {
+export function RepositoryFeatureDistribution({ stats }: { stats: Stats }) {
   const FEATURE_COLORS: Record<string, string> = {
     Issues: "#58a6ff",
     "Pull Requests": "#3fb950",
@@ -574,27 +652,23 @@ export function RefactoredRepositoryFeatureDistribution({
     (sum, item) => sum + item.count,
     0
   );
-  const data = stats.collaborationStats.featureDistribution.map(
-    (item) => ({
-      name: item.feature,
-      value: item.count,
-      percent: ((item.count / totalCount) * 100).toFixed(1),
-    })
-  );
+  const data = stats.collaborationStats.featureDistribution.map((item) => ({
+    name: item.feature,
+    value: item.count,
+    percent: ((item.count / totalCount) * 100).toFixed(1),
+  }));
   return (
     <GenericPieChart
       title="Repository Features Distribution"
       data={data}
-      colors={data.map(
-        (entry) => FEATURE_COLORS[entry.name] || FALLBACK_COLOR
-      )}
+      colors={data.map((entry) => FEATURE_COLORS[entry.name] || FALLBACK_COLOR)}
       formatter={(value: ValueType) => formatNumber(Number(value))}
       labelFormatter={(item) => `${item.name}: ${item.percent}%`}
     />
   );
 }
 
-export function RefactoredCollaborators({
+export function Collaborators({
   stats,
   limit = 10,
   fullWidth,

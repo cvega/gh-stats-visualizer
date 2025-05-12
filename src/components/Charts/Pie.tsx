@@ -4,13 +4,7 @@ import type {
   ValueType,
   Payload,
 } from "recharts/types/component/DefaultTooltipContent";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import {
   chartCardStyle,
   chartContainerStyle,
@@ -43,7 +37,11 @@ export interface GenericPieChartProps {
   colors?: string[];
   height?: number;
   outerRadius?: number;
-  formatter?: (value: ValueType, name: NameType, entry: Payload<ValueType, string>) => ReactNode;
+  formatter?: (
+    value: ValueType,
+    name: NameType,
+    entry: Payload<ValueType, string>
+  ) => ReactNode;
   showLabel?: boolean;
   labelFormatter?: (item: { name: string; percent: number }) => string;
   className?: string;
@@ -90,10 +88,7 @@ export function GenericPieChart({
       <div style={chartContainerStyle}>
         <ResponsiveContainer width="100%" height={height}>
           <PieChart>
-            <Pie
-              data={data}
-              {...mergedPieProps}
-            >
+            <Pie data={data} {...mergedPieProps}>
               {data.map((_, index) => (
                 <Cell
                   key={`cell-${index}`}

@@ -1,6 +1,5 @@
-import type { Stats } from "../types";
+import type { Stats, Repository } from "@types";
 import { calculateCollaborationStats } from "./collaborationStats";
-import type { Repository } from "../types/repository";
 
 export function calculateStats(repos: Repository[]): Stats {
   const basic = {
@@ -33,6 +32,34 @@ export function calculateStats(repos: Repository[]): Stats {
     ),
     totalProjects: repos.reduce(
       (sum: number, repo) => sum + (repo.Project_Count || 0),
+      0
+    ),
+    totalTags: repos.reduce(
+      (sum: number, repo) => sum + (repo.Tag_Count || 0),
+      0
+    ),
+    totalIssueComments: repos.reduce(
+      (sum: number, repo) => sum + (repo.Issue_Comment_Count || 0),
+      0
+    ),
+    totalPRReviewComments: repos.reduce(
+      (sum: number, repo) => sum + (repo.PR_Review_Comment_Count || 0),
+      0
+    ),
+    totalBranches: repos.reduce(
+      (sum: number, repo) => sum + (repo.Branch_Count || 0),
+      0
+    ),
+    totalDiscussions: repos.reduce(
+      (sum: number, repo) => sum + (repo.Discussion_Count || 0),
+      0
+    ),
+    totalPRReviews: repos.reduce(
+      (sum: number, repo) => sum + (repo.PR_Review_Count || 0),
+      0
+    ),
+    totalIssueEvents: repos.reduce(
+      (sum: number, repo) => sum + (repo.Issue_Event_Count || 0),
       0
     ),
     totalWikis: repos.reduce(

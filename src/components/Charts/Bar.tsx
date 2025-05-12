@@ -40,9 +40,15 @@ interface AxisProps {
   dataKey?: string;
   stroke?: string;
   width?: number;
-  tick?: {
-    fontSize?: number;
-  } | ((props: { x: number; y: number; payload: { value: string | number } }) => ReactElement<SVGElement>);
+  tick?:
+    | {
+        fontSize?: number;
+      }
+    | ((props: {
+        x: number;
+        y: number;
+        payload: { value: string | number };
+      }) => ReactElement<SVGElement>);
 }
 
 export interface GenericBarChartProps {
@@ -52,8 +58,16 @@ export interface GenericBarChartProps {
   layout?: "horizontal" | "vertical";
   height?: number;
   colors?: string[];
-  renderCustomTick?: (props: { x: number; y: number; payload: { value: string | number } }) => ReactElement<SVGElement>;
-  formatter?: (value: ValueType, name: NameType, entry: Payload<ValueType, string>) => ReactNode;
+  renderCustomTick?: (props: {
+    x: number;
+    y: number;
+    payload: { value: string | number };
+  }) => ReactElement<SVGElement>;
+  formatter?: (
+    value: ValueType,
+    name: NameType,
+    entry: Payload<ValueType, string>
+  ) => ReactNode;
   labelFormatter?: (label: string) => ReactNode;
   margin?: { top: number; right: number; left: number; bottom: number };
   XAxisProps?: Partial<AxisProps>;
@@ -83,7 +97,12 @@ export function GenericBarChart({
   // Default props for axes based on layout
   const defaultXAxisProps: AxisProps = isVertical
     ? { type: "number", stroke: "#8b949e", tick: { fontSize: 12 } }
-    : { type: "category", dataKey: "name", stroke: "#8b949e", tick: { fontSize: 12 } };
+    : {
+        type: "category",
+        dataKey: "name",
+        stroke: "#8b949e",
+        tick: { fontSize: 12 },
+      };
 
   const defaultYAxisProps: AxisProps = isVertical
     ? { type: "category", dataKey: "name", width: 90, stroke: "#8b949e" }

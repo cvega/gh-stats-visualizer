@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import Papa from "papaparse";
-import type { Stats } from "../types/stats";
-import type { Repository } from "../types/repository";
+import type { Stats, Repository } from "@types";
 import parseCsvAndCalculateStats from "../utils/parseCsv";
 
 interface UploaderProps {
   onStatsReady: (_stats: Stats) => void;
+  onAnalyzeStart?: () => void;
 }
 
-export default function Uploader({ onStatsReady }: UploaderProps) {
+export default function Upload({
+  onStatsReady,
+  onAnalyzeStart,
+}: UploaderProps) {
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,6 +25,7 @@ export default function Uploader({ onStatsReady }: UploaderProps) {
   };
 
   const handleAnalyzeClick = async () => {
+    if (onAnalyzeStart) onAnalyzeStart();
     if (!file) {
       setError("Please select a CSV file first.");
       return;

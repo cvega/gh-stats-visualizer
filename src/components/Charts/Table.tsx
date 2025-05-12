@@ -16,7 +16,10 @@ export interface TableRow {
 export interface TableColumn {
   key: string;
   header: string;
-  render?: (value: string | number | boolean | null | undefined, row: TableRow) => React.ReactNode;
+  render?: (
+    value: string | number | boolean | null | undefined,
+    row: TableRow
+  ) => React.ReactNode;
   align?: "left" | "right" | "center";
 }
 
