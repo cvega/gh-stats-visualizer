@@ -1,5 +1,5 @@
 import type { Stats, Repository } from "@types";
-import { calculateCollaborationStats } from "./collaborationStats";
+import { calculateCollaborationStats } from "./calculateStats";
 
 export default function parseCsvAndCalculateStats(data: Repository[]): Stats {
   const totalRepos = data.length;
