@@ -1,9 +1,11 @@
 # GitHub Stats Analyzer
 
-A simple web application that visualizes GitHub repository statistics and collaboration patterns. Built with React, TypeScript, and Vite.
+A simple static web application that visualizes GitHub repository statistics and collaboration patterns. Built with React, TypeScript, and Vite. 
 
 <!-- Option 1: Local image (recommended) -->
-![GitHub Stats Analyzer Screenshot](./assets/gh-stats-visualizer.png)
+![GitHub Stats Analyzer Upload](./assets/gh-stats-visualizer-upload.png)
+
+![GitHub Stats Analyzer Dashboard](./assets/gh-stats-visualizer-dashboard.png)
 
 
 ## Features
@@ -13,7 +15,6 @@ A simple web application that visualizes GitHub repository statistics and collab
 - 👥 Collaboration pattern insights
 - 🎨 Modern, responsive UI with GitHub's design system
 - ⚡ Fast performance with Vite
-- 📱 Mobile-friendly interface
 
 ## Getting Started
 
