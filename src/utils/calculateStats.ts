@@ -1,5 +1,18 @@
+/**
+ * calculateStats.ts
+ *
+ * Provides functions for calculating repository statistics and collaboration metrics from an array of Repository objects.
+ * Includes calculation of basic stats, activity, size, update frequency, organization distribution, and collaboration features.
+ */
+
 import type { Stats, Repository } from "@types";
 
+/**
+ * Structure of collaboration statistics for repositories.
+ * - collaboratorDistribution: Distribution of repos by collaborator count ranges.
+ * - topCollaboratorRepos: Top repos by collaborator count.
+ * - featureDistribution: Distribution of feature usage (issues, PRs, etc.).
+ */
 export interface CollaborationStats {
   collaboratorDistribution: {
     range: string;
@@ -16,6 +29,11 @@ export interface CollaborationStats {
   }[];
 }
 
+/**
+ * Calculates collaboration statistics for a set of repositories.
+ * @param repos - Array of Repository objects.
+ * @returns CollaborationStats object with collaborator and feature distributions.
+ */
 export function calculateCollaborationStats(
   repos: Repository[]
 ): CollaborationStats {
@@ -93,6 +111,13 @@ export function calculateCollaborationStats(
   };
 }
 
+/**
+ * Calculates a wide range of repository statistics from an array of Repository objects.
+ * Includes basic stats, activity, size, update frequency, org distribution, year data, branch data, largest/active repos, and collaboration stats.
+ *
+ * @param repos - Array of Repository objects.
+ * @returns Stats object with all calculated metrics.
+ */
 export function calculateStats(repos: Repository[]): Stats {
   const basic = {
     totalRepos: repos.length,

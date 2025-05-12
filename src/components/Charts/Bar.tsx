@@ -1,3 +1,16 @@
+/**
+ * Bar.tsx
+ *
+ * Provides the GenericBarChart React component and supporting types for rendering customizable bar charts using Recharts.
+ * Includes flexible axis, color, and layout options for both horizontal and vertical bar charts.
+ *
+ * Exports:
+ * - DataItem: Data structure for a single bar chart data point.
+ * - GenericBarConfig: Configuration for a single bar in the chart.
+ * - GenericBarChart: Main bar chart component.
+ * - AxisProps, GenericBarChartProps: Supporting prop types.
+ */
+
 import type { ReactNode, ReactElement } from "react";
 import type {
   NameType,
@@ -23,11 +36,22 @@ import {
   tooltipItemStyle,
 } from "@styles";
 
+/**
+ * Represents a single data point for the bar chart.
+ * The 'name' property is used for axis labeling; additional keys are used for bar values.
+ */
 export interface DataItem {
   name: string;
   [key: string]: string | number;
 }
 
+/**
+ * Configuration for a single bar in the chart.
+ * - dataKey: The key in the data to use for this bar.
+ * - name: Optional display name for the legend.
+ * - fill: Optional color override for this bar.
+ * - stackId: Optional stack group for stacked bar charts.
+ */
 export interface GenericBarConfig {
   dataKey: string;
   name?: string;
@@ -35,6 +59,10 @@ export interface GenericBarConfig {
   stackId?: string;
 }
 
+/**
+ * Axis configuration props for XAxis and YAxis.
+ * Allows for custom tick rendering and axis styling.
+ */
 interface AxisProps {
   type?: "number" | "category";
   dataKey?: string;
@@ -51,6 +79,22 @@ interface AxisProps {
       }) => ReactElement<SVGElement>);
 }
 
+/**
+ * Props for the GenericBarChart component.
+ * - title: Chart title.
+ * - data: Array of data items.
+ * - bars: Array of bar configurations.
+ * - layout: 'horizontal' or 'vertical'.
+ * - height: Chart height in pixels.
+ * - colors: Optional array of colors for bars.
+ * - renderCustomTick: Optional custom tick renderer for axes.
+ * - formatter: Optional value formatter for tooltips.
+ * - labelFormatter: Optional label formatter for tooltips.
+ * - margin: Chart margin object.
+ * - XAxisProps, YAxisProps: Additional axis props.
+ * - className: Optional CSS class.
+ * - fullWidth: If true, chart spans full grid width.
+ */
 export interface GenericBarChartProps {
   title: string;
   data: DataItem[];
@@ -76,6 +120,13 @@ export interface GenericBarChartProps {
   fullWidth?: boolean;
 }
 
+/**
+ * Renders a generic, highly customizable bar chart using Recharts.
+ * Supports both horizontal and vertical layouts, stacked bars, custom colors, and custom axis ticks.
+ *
+ * @param {GenericBarChartProps} props - The chart configuration and data.
+ * @returns {JSX.Element} The rendered bar chart component.
+ */
 export function GenericBarChart({
   title,
   data,
@@ -92,6 +143,7 @@ export function GenericBarChart({
   className,
   fullWidth = false,
 }: GenericBarChartProps) {
+  // Determine if the chart is vertical (bars go left-to-right)
   const isVertical = layout === "vertical";
 
   // Default props for axes based on layout
@@ -108,7 +160,7 @@ export function GenericBarChart({
     ? { type: "category", dataKey: "name", width: 90, stroke: "#8b949e" }
     : { type: "number", stroke: "#8b949e", tick: { fontSize: 12 } };
 
-  // Merge default and custom props
+  // Merge default and custom props for axes
   const xAxisProps = { ...defaultXAxisProps, ...XAxisProps };
   const yAxisProps = { ...defaultYAxisProps, ...YAxisProps };
 
@@ -125,8 +177,10 @@ export function GenericBarChart({
           <BarChart data={data} layout={layout} margin={margin}>
             <CartesianGrid strokeDasharray="3 3" stroke="#30363d" />
 
+            {/* X Axis with optional custom tick renderer */}
             <XAxis {...xAxisProps} tick={renderCustomTick || xAxisProps.tick} />
 
+            {/* Y Axis with optional custom tick renderer for vertical charts */}
             <YAxis
               {...yAxisProps}
               tick={
@@ -136,6 +190,7 @@ export function GenericBarChart({
               }
             />
 
+            {/* Tooltip with custom value and label formatters */}
             <Tooltip
               contentStyle={tooltipStyle}
               formatter={formatter}
@@ -143,8 +198,10 @@ export function GenericBarChart({
               labelFormatter={labelFormatter}
             />
 
+            {/* Show legend if more than one bar */}
             {bars.length > 1 && <Legend />}
 
+            {/* Render each bar, optionally with per-bar or per-cell colors */}
             {bars.map((bar: GenericBarConfig, index: number) => (
               <Bar
                 key={bar.dataKey}
@@ -156,6 +213,7 @@ export function GenericBarChart({
                 }
                 stackId={bar.stackId}
               >
+                {/* If colors are provided and no bar.fill, color each cell individually */}
                 {colors &&
                   !bar.fill &&
                   data.map((_: DataItem, idx: number) => (

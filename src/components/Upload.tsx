@@ -1,13 +1,32 @@
+/**
+ * Upload.tsx
+ *
+ * Provides the Upload component for uploading and analyzing a GitHub repository CSV file.
+ * Handles file selection, CSV parsing, error handling, and triggers analysis timing.
+ */
+
 import React, { useState } from "react";
 import Papa from "papaparse";
 import type { Stats, Repository } from "@types";
 import parseCsvAndCalculateStats from "../utils/parseCsv";
 
+/**
+ * Props for the Upload component.
+ * @property onStatsReady - Callback with parsed and calculated stats.
+ * @property onAnalyzeStart - Optional callback to trigger analysis timing.
+ */
 interface UploaderProps {
   onStatsReady: (_stats: Stats) => void;
   onAnalyzeStart?: () => void;
 }
 
+/**
+ * Upload component for uploading and analyzing a GitHub repository CSV file.
+ * Handles file selection, CSV parsing, error handling, and triggers analysis timing.
+ *
+ * @param props - UploaderProps with onStatsReady and optional onAnalyzeStart.
+ * @returns JSX element for the upload form and button.
+ */
 export default function Upload({
   onStatsReady,
   onAnalyzeStart,
@@ -16,6 +35,10 @@ export default function Upload({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  /**
+   * Handles file input change and sets the selected file.
+   * @param e - The file input change event.
+   */
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
     if (selected) {
@@ -24,6 +47,10 @@ export default function Upload({
     }
   };
 
+  /**
+   * Handles the Analyze button click, triggers analysis timing, parses CSV, and calls onStatsReady.
+   * @returns void
+   */
   const handleAnalyzeClick = async () => {
     if (onAnalyzeStart) onAnalyzeStart();
     if (!file) {

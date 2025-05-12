@@ -1,8 +1,15 @@
+/**
+ * styles.ts
+ *
+ * Provides design tokens, layout, typography, chart/table helpers, and global CSS injection for the dashboard application.
+ * Exports a theme object, reusable style objects for components, and injects global CSS variables and styles.
+ */
+
 import type { CSSProperties } from "react";
 
-/* -------------------------------------------------- */
-/*  DESIGN‑TOKEN PALETTE                              */
-/* -------------------------------------------------- */
+/**
+ * Design token palette for theme colors, spacing, and radii.
+ */
 export const theme = {
   colors: {
     bg: "#0d1117",
@@ -16,15 +23,18 @@ export const theme = {
   radius: { sm: 6, md: 8 },
 };
 
-/* -------------------------------------------------- */
-/*  LAYOUT                                            */
-/* -------------------------------------------------- */
+/**
+ * Main container style for the dashboard layout.
+ */
 export const containerStyle: CSSProperties = {
   maxWidth: 1280,
   margin: "0 auto",
   padding: `0 ${theme.space.md}px ${theme.space.lg * 2}px`,
 };
 
+/**
+ * Grid style for stat cards and dashboard sections.
+ */
 export const gridStyle: CSSProperties = {
   display: "grid",
   gridTemplateColumns: "repeat(4, 1fr)",
@@ -33,6 +43,9 @@ export const gridStyle: CSSProperties = {
   marginBottom: theme.space.lg,
 };
 
+/**
+ * Style for chart grid cells.
+ */
 export const chartCellStyle: CSSProperties = {
   gridColumn: "span 2",
   display: "flex",
@@ -41,9 +54,9 @@ export const chartCellStyle: CSSProperties = {
   height: "100%",
 };
 
-/* -------------------------------------------------- */
-/*  SURFACES                                          */
-/* -------------------------------------------------- */
+/**
+ * Card style for dashboard surfaces.
+ */
 export const cardStyle: CSSProperties = {
   backgroundColor: theme.colors.card,
   border: `1px solid ${theme.colors.border}`,
@@ -51,6 +64,9 @@ export const cardStyle: CSSProperties = {
   boxShadow: "0 1px 3px rgba(0,0,0,.2)",
 };
 
+/**
+ * Card style for chart containers.
+ */
 export const chartCardStyle: CSSProperties = {
   ...cardStyle,
   padding: theme.space.md,
@@ -61,6 +77,9 @@ export const chartCardStyle: CSSProperties = {
   boxSizing: "border-box",
 };
 
+/**
+ * Card style for stat cards.
+ */
 export const statCardStyle: CSSProperties = {
   ...cardStyle,
   padding: theme.space.md,
@@ -69,9 +88,9 @@ export const statCardStyle: CSSProperties = {
   justifyContent: "center",
 };
 
-/* -------------------------------------------------- */
-/*  TYPOGRAPHY                                        */
-/* -------------------------------------------------- */
+/**
+ * Typography styles for titles, subtitles, stat labels, and values.
+ */
 export const titleStyle: CSSProperties = {
   color: theme.colors.text,
   fontSize: 16,
@@ -99,9 +118,9 @@ export const statValueStyle: CSSProperties = {
   margin: 0,
 };
 
-/* -------------------------------------------------- */
-/*  CHART HELPERS                                     */
-/* -------------------------------------------------- */
+/**
+ * Chart helper styles and constants.
+ */
 export const chartContainerStyle: CSSProperties = { flex: 1, minHeight: 0 };
 export const chartMargin = { top: 20, right: 30, left: 20, bottom: 5 } as const;
 
@@ -114,9 +133,9 @@ export const tooltipStyle: CSSProperties = {
 };
 export const tooltipItemStyle: CSSProperties = { color: theme.colors.text };
 
-/* -------------------------------------------------- */
-/*  FOOTER                                            */
-/* -------------------------------------------------- */
+/**
+ * Footer style for the dashboard.
+ */
 export const footerStyle: CSSProperties = {
   textAlign: "center",
   padding: `${theme.space.lg}px 0`,
@@ -125,15 +144,18 @@ export const footerStyle: CSSProperties = {
   fontSize: 12,
 };
 
-/* -------------------------------------------------- */
-/*  TABLES                                            */
-/* -------------------------------------------------- */
+/**
+ * Grid style for tables.
+ */
 export const tablesGridStyle: CSSProperties = {
   display: "grid",
   gridTemplateColumns: "1fr 1fr",
   gap: theme.space.lg,
 };
 
+/**
+ * Card and table styles for tables.
+ */
 export const tableCardStyle: CSSProperties = {
   ...cardStyle,
   padding: `${theme.space.lg + theme.space.md}px ${theme.space.md}px`,
@@ -170,9 +192,10 @@ export const tableHeaderStyle: CSSProperties = {
 
 export const tableBodyCellStyle: CSSProperties = { color: theme.colors.text };
 
-/* -------------------------------------------------- */
-/*  GLOBAL CSS INJECTION                              */
-/* -------------------------------------------------- */
+/**
+ * Injects global CSS variables and styles for the dashboard theme and tables.
+ * This runs once on module load.
+ */
 function camelToKebab(s: string) {
   return s.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase());
 }
@@ -212,6 +235,9 @@ function objToCss(obj: CSSProperties) {
   document.head.appendChild(style);
 })();
 
+/**
+ * Grid style for the main dashboard chart and table layout.
+ */
 export const dashboardGridStyle: CSSProperties = {
   display: "grid",
   gridTemplateColumns: "repeat(2, 1fr)",

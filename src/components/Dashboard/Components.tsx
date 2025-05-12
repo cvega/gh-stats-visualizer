@@ -1,3 +1,16 @@
+/**
+ * Components.tsx
+ *
+ * Provides a collection of dashboard components for rendering repository statistics, charts, tables, and summary cards.
+ * Includes chart wrappers, stat card grids, summary headers, and utility functions for formatting and displaying repository analytics.
+ *
+ * Exports:
+ * - SummaryHeader: Section header with title and optional description.
+ * - DashboardSection: Main dashboard layout with all charts and tables.
+ * - RepositoryActivityLevels, RepositorySizeDistribution, ...: Chart and table components for various repository metrics.
+ * - Collaborators: Table of repositories with most collaborators.
+ */
+
 import type { ValueType } from "recharts/types/component/DefaultTooltipContent";
 import type {
   Stats,
@@ -30,11 +43,19 @@ import {
 } from "../../styles";
 import { formatSize } from "../Charts/Utils";
 
+/**
+ * Props for the summary header component.
+ */
 interface SummaryHeaderProps {
   title: string;
   description?: string;
 }
 
+/**
+ * Renders a section header with a title and optional description.
+ * @param props - { title, description } for the header.
+ * @returns JSX element for the section header.
+ */
 export function SummaryHeader({ title, description }: SummaryHeaderProps) {
   return (
     <div style={{ marginBottom: "24px", marginTop: "24px" }}>
@@ -44,6 +65,7 @@ export function SummaryHeader({ title, description }: SummaryHeaderProps) {
   );
 }
 
+// Stat card definitions for the stat card grid
 const statDefinitions = [
   {
     key: "totalSize",
@@ -76,7 +98,12 @@ const statDefinitions = [
   },
 ];
 
-// Inline StatCard definition
+/**
+ * Renders a single stat card for the stat card grid.
+ * @param title - The card title.
+ * @param value - The card value.
+ * @param color - The value color.
+ */
 function StatCard({
   title,
   value,
@@ -94,6 +121,10 @@ function StatCard({
   );
 }
 
+/**
+ * Renders a grid of stat cards for basic repository statistics.
+ * @param stats - The basic stats object.
+ */
 function StatsCardGrid({ stats }: { stats: BasicStats }) {
   return (
     <div style={gridStyle}>
@@ -113,6 +144,11 @@ function StatsCardGrid({ stats }: { stats: BasicStats }) {
   );
 }
 
+/**
+ * Renders a pie chart showing repository activity levels.
+ * @param data - Array of { name, value } for activity levels.
+ * @returns JSX element for the pie chart.
+ */
 export function RepositoryActivityLevels({
   data,
 }: {
@@ -134,7 +170,11 @@ export function RepositoryActivityLevels({
   );
 }
 
-// Example refactoring of RepositorySizeDistribution
+/**
+ * Renders a bar chart showing the distribution of repository sizes.
+ * @param data - Array of { name, value } for size categories.
+ * @returns JSX element for the bar chart.
+ */
 export function RepositorySizeDistribution({
   data,
 }: {
@@ -166,7 +206,11 @@ export function RepositorySizeDistribution({
   );
 }
 
-// Example refactoring of RepositoryUpdateFrequency
+/**
+ * Renders a vertical bar chart showing repository update frequency.
+ * @param data - Array of { name, value } for update frequency.
+ * @returns JSX element for the bar chart.
+ */
 export function RepositoryUpdateFrequency({
   data,
 }: {
@@ -186,7 +230,11 @@ export function RepositoryUpdateFrequency({
   );
 }
 
-// Example refactoring of RepositoryCreationTime
+/**
+ * Renders a line chart showing the timeline of repository creation years.
+ * @param data - Array of { year, count } for creation years.
+ * @returns JSX element for the line chart.
+ */
 export function RepositoryCreationTime({
   data,
 }: {
@@ -214,7 +262,11 @@ export function RepositoryCreationTime({
   );
 }
 
-// Example refactoring of RepositorySizeLargest
+/**
+ * Renders a vertical bar chart of the top 10 largest repositories by size.
+ * @param data - Array of { name, value } for repository sizes.
+ * @returns JSX element for the bar chart.
+ */
 export function RepositorySizeLargest({
   data,
 }: {
@@ -242,7 +294,14 @@ export function RepositorySizeLargest({
   );
 }
 
-// Example refactoring of RepositoryTable
+/**
+ * Renders a table of repositories with optional title, limit, and full width.
+ * @param data - Array of { name, created?, lastPush? } for repositories.
+ * @param title - Optional table title.
+ * @param limit - Optional row limit.
+ * @param fullWidth - Optional full width flag.
+ * @returns JSX element for the table.
+ */
 export function RepositoryTable({
   data,
   title = "Repositories",
@@ -273,6 +332,11 @@ export function RepositoryTable({
   );
 }
 
+/**
+ * Renders the main dashboard section with all charts and tables.
+ * @param stats - The full repository stats object.
+ * @returns JSX element for the dashboard section.
+ */
 export function DashboardSection({ stats }: { stats: Stats }) {
   return (
     <div>
@@ -298,8 +362,6 @@ export function DashboardSection({ stats }: { stats: Stats }) {
         <RepositorySizeLargest data={stats.largestRepos} />
       </div>
 
-      {/* Largest Repos */}
-
       {/* Tables grid */}
       <div style={dashboardGridStyle}>
         <RepositoryTable data={stats.newestRepos} title="Newest" limit={10} />
@@ -318,6 +380,11 @@ export function DashboardSection({ stats }: { stats: Stats }) {
   );
 }
 
+/**
+ * Renders a vertical bar chart showing branch complexity for repositories.
+ * @param data - Array of RepositoryComplexity objects.
+ * @returns JSX element for the bar chart.
+ */
 export function BranchComplexity({ data }: { data: RepositoryComplexity[] }) {
   const chartData: DataItem[] = data.map((item) => ({
     name: item.name,
@@ -360,6 +427,11 @@ export function BranchComplexity({ data }: { data: RepositoryComplexity[] }) {
   );
 }
 
+/**
+ * Renders a bar chart showing the distribution of branches across repositories.
+ * @param data - Array of { name, value } for branch counts.
+ * @returns JSX element for the bar chart.
+ */
 export function BranchDistribution({
   data,
 }: {
@@ -388,6 +460,11 @@ export function BranchDistribution({
   );
 }
 
+/**
+ * Renders a vertical bar chart showing the distribution of repositories across organizations.
+ * @param data - Array of { name, value } for organizations.
+ * @returns JSX element for the bar chart.
+ */
 export function OrganizationRepositoryDistribution({
   data,
 }: {
@@ -420,6 +497,11 @@ export function OrganizationRepositoryDistribution({
   );
 }
 
+/**
+ * Renders a bar chart showing the distribution of collaborator counts across repositories.
+ * @param stats - The full repository stats object.
+ * @returns JSX element for the bar chart.
+ */
 export function RepoCollaboratorDistribution({ stats }: { stats: Stats }) {
   const data = stats.collaborationStats.collaboratorDistribution;
   const chartData = data.map((item) => ({
@@ -450,6 +532,11 @@ export function RepoCollaboratorDistribution({ stats }: { stats: Stats }) {
   );
 }
 
+/**
+ * Renders a vertical stacked bar chart of the top 10 most active repositories (issues and PRs).
+ * @param data - Array of RepositoryActivity objects.
+ * @returns JSX element for the bar chart.
+ */
 export function RepositoryActivityDistribution({
   data,
 }: {
@@ -502,6 +589,11 @@ export function RepositoryActivityDistribution({
   );
 }
 
+/**
+ * Renders a vertical bar chart showing the age of repositories in years and days.
+ * @param data - Array of RepositoryAge objects.
+ * @returns JSX element for the bar chart.
+ */
 export function RepositoryAgeDistribution({ data }: { data: RepositoryAge[] }) {
   const chartData: DataItem[] = data.map((item) => ({
     name: item.name,
@@ -541,6 +633,11 @@ export function RepositoryAgeDistribution({ data }: { data: RepositoryAge[] }) {
   );
 }
 
+/**
+ * Renders a vertical bar chart showing the code-to-metadata ratio for repositories.
+ * @param data - Array of RepositoryMetadata objects.
+ * @returns JSX element for the bar chart.
+ */
 export function RepositoryMetadataRatio({
   data,
 }: {
@@ -583,6 +680,11 @@ export function RepositoryMetadataRatio({
   );
 }
 
+/**
+ * Renders a vertical stacked bar chart showing tag and release frequency for repositories.
+ * @param data - Array of RepositoryReleaseInfo objects.
+ * @returns JSX element for the bar chart.
+ */
 export function RepositoryTagReleaseFrequency({
   data,
 }: {
@@ -637,6 +739,11 @@ export function RepositoryTagReleaseFrequency({
   );
 }
 
+/**
+ * Renders a pie chart showing the distribution of repository features (issues, PRs, etc.).
+ * @param stats - The full repository stats object.
+ * @returns JSX element for the pie chart.
+ */
 export function RepositoryFeatureDistribution({ stats }: { stats: Stats }) {
   const FEATURE_COLORS: Record<string, string> = {
     Issues: "#58a6ff",
@@ -668,6 +775,13 @@ export function RepositoryFeatureDistribution({ stats }: { stats: Stats }) {
   );
 }
 
+/**
+ * Renders a table of repositories with the most collaborators.
+ * @param stats - The full repository stats object.
+ * @param limit - Optional row limit.
+ * @param fullWidth - Optional full width flag.
+ * @returns JSX element for the table.
+ */
 export function Collaborators({
   stats,
   limit = 10,
