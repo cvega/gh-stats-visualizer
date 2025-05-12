@@ -1,5 +1,5 @@
 /**
- * Components.tsx
+ * Visualization.tsx
  *
  * Provides a collection of dashboard components for rendering repository statistics, charts, tables, and summary cards.
  * Includes chart wrappers, stat card grids, summary headers, and utility functions for formatting and displaying repository analytics.

@@ -8,7 +8,7 @@
 import type { Stats } from "@types";
 import { containerStyle } from "@styles";
 
-import { DashboardSection, SummaryHeader } from "./Dashboard/Components";
+import { DashboardSection, SummaryHeader } from "./Dashboard/Visualization";
 import Footer from "./Footer";
 
 /**
