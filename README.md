@@ -13,7 +13,7 @@ A simple static web application that visualizes GitHub repository statistics and
 - 📊 Interactive dashboard with multiple visualization types
 - 📈 Time-based analysis of repository activity
 - 👥 Collaboration pattern insights
-- 🎨 Modern, responsive UI with GitHub's design system
+- 🎨 Modern, responsive UI
 - ⚡ Fast performance with Vite
 
 ## Getting Started
